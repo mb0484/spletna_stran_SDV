@@ -2,14 +2,6 @@
 
 {% block content %}
 
-    <div class="uk-cover-container">
-        <canvas width="400" height="200"></canvas>
-        <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
-        <div class="uk-overlay uk-position-bottom uk-light">
-            <center><h1 class="podstrani_text">NOVICE</h1></center>
-        </div>
-    </div> 
-
     <div class="uk-container">
         <div class="uk-container uk-container-expand uk-margin-remove-top">
 
@@ -199,6 +191,10 @@
     </div>
 
     <script type = "text/javascript">
+        makeNavigationLinkActive('novice_page')
+    </script>
+
+    <script type = "text/javascript">
         readBase64("{{ clanek['image1'] }}")
     </script>
 
@@ -216,12 +212,8 @@
 
     {% for zadnji_clanek in zadnji_clanki %}
         <script type = "text/javascript">
-            addZadnjiClanek("{{ zadnji_clanek['image1'] }}", "{{ zadnji_clanek['short_content'] }}", "{{ zadnji_clanek['id'] }}")
+            addZadnjiClanek("{{ zadnji_clanek['image1Smaller'] }}", "{{ zadnji_clanek['short_content'] }}", "{{ zadnji_clanek['id'] }}")
         </script>
     {% endfor %}
-
-    <script type = "text/javascript">
-        makeNavigationLinkActive('novice_page')
-    </script>
 
 {% endblock %}

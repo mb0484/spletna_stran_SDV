@@ -55,9 +55,9 @@ body {
     margin-left: 20px;
 }
 
-.div_for_clanki_slika {
+/* .div_for_clanki_slika {
     height: 100px;
-}
+} */
 
 @media (min-width: 500px) {
     .div_for_clanki_slika {

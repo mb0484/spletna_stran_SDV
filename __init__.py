@@ -56,7 +56,7 @@ def novice():
 
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT * FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 
@@ -78,7 +78,7 @@ def get_novica(novica_id):
 
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT * FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 

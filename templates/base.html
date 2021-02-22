@@ -25,7 +25,7 @@
             </div>
 
 
-            <div id="navigacija_telefon" class="uk-navbar-right menu">
+            <div style="display: none;" id="navigacija_telefon" class="uk-navbar-right menu">
 
                 <button class="uk-margin-medium-right" uk-icon="icon: table; ratio: 2" type="button" uk-toggle="target: #offcanvas-flip"></button>
 
@@ -59,7 +59,7 @@
             </div>
 
 
-            <div id="navigacija" class="uk-navbar-right menu">
+            <div style="display: none;" id="navigacija" class="uk-navbar-right menu">
 
                 <ul class="uk-navbar-nav uk">
                     <li id="home_page2"><a href="{{ url_for('index')}}"><p class="navigaciija_text">Vincencij</p></a></li>
@@ -80,6 +80,15 @@
                 </ul>
             </div>
         </nav>
+
+        <div style="display: none;" id="slikaNaslovPodstrani" class="uk-cover-container">
+            <canvas width="400" height="200"></canvas>
+            <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
+            <div class="uk-overlay uk-position-bottom uk-light">
+                <center><h1 id="podstranText" class="podstrani_text"></h1></center>
+            </div>
+        </div> 
+
         <div class="">
             {% for message in get_flashed_messages() %}
                 <div class="alert alert-danger">{{ message }}</div>

@@ -6,12 +6,14 @@ var expandCollapse = function(){
 
             if (document.getElementById("naslovnicaDodatek2") != null)
                 document.getElementById("naslovnicaDodatek2").className = " collapse";
-
+            
             if (document.getElementById("navigacija") != null)
-                document.getElementById("navigacija").className = " collapse";
+                document.getElementById("navigacija").style = "display: none;"
 
-            if (document.getElementById("navigacija_telefon") != null)
+            if (document.getElementById("navigacija_telefon") != null) {
                 document.getElementById("navigacija_telefon").className = "uk-navbar-right menu";
+                document.getElementById("navigacija_telefon").style = ""
+            }
 
             if (document.getElementById("zadnje_slike") != null)
                 document.getElementById("zadnje_slike").className = " collapse";
@@ -55,10 +57,12 @@ var expandCollapse = function(){
                 document.getElementById("naslovnicaDodatek2").className = " collapse";
 
             if (document.getElementById("navigacija") != null)
-                document.getElementById("navigacija").className = " collapse";
+                document.getElementById("navigacija").style = "display: none;"
 
-            if (document.getElementById("navigacija_telefon") != null)
+            if (document.getElementById("navigacija_telefon") != null) {
                 document.getElementById("navigacija_telefon").className = "uk-navbar-right menu";
+                document.getElementById("navigacija_telefon").style = ""
+            }
 
             if (document.getElementById("zadnje_slike") != null)
                 document.getElementById("zadnje_slike").className = " collapse";
@@ -93,11 +97,13 @@ var expandCollapse = function(){
             if (document.getElementById("naslovnicaDodatek2") != null)
                 document.getElementById("naslovnicaDodatek2").className = "uk-overlay uk-overlay-primary uk-position-right uk-text-center uk-transition-slide-right uk-width-medium";
 
-            if (document.getElementById("navigacija") != null)
-                document.getElementById("navigacija").className = " uk-navbar-right menu";
+            if (document.getElementById("navigacija") != null) {
+                document.getElementById("navigacija").className = "uk-navbar-right menu";
+                document.getElementById("navigacija").style = ""
+            }
 
             if (document.getElementById("navigacija_telefon") != null)
-                document.getElementById("navigacija_telefon").className = "collapse";
+                document.getElementById("navigacija_telefon").style = "display: none;"
 
             if (document.getElementById("zadnje_slike") != null)
                 document.getElementById("zadnje_slike").className = "uk-width-1-4 uk-margin-xlarge-top uk-margin-medium-bottom uk-margin-remove-right";
@@ -133,11 +139,13 @@ var expandCollapse = function(){
             if (document.getElementById("naslovnicaDodatek2") != null)
                 document.getElementById("naslovnicaDodatek2").className = "uk-overlay uk-overlay-primary uk-position-right uk-text-center uk-transition-slide-right uk-width-medium";
 
-            if (document.getElementById("navigacija") != null)
-                document.getElementById("navigacija").className = " uk-navbar-right menu"
+            if (document.getElementById("navigacija") != null) {
+                document.getElementById("navigacija").className = "uk-navbar-right menu";
+                document.getElementById("navigacija").style = ""
+            }
 
             if (document.getElementById("navigacija_telefon") != null)
-                document.getElementById("navigacija_telefon").className = "collapse";
+                document.getElementById("navigacija_telefon").style = "display: none;"
 
             if (document.getElementById("zadnje_slike") != null)
                 document.getElementById("zadnje_slike").className = "uk-width-1-4 uk-margin-xlarge-top uk-margin-medium-bottom uk-margin-remove-right";
@@ -782,18 +790,14 @@ function uploadClanek(indexIfEdit) {
     
     othrBase64dataImages = []
 
-    if (true || imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
+    if (imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
         convertImagesToBase64(0, function() {
             var readerMainImage = new FileReader();
             readerMainImage.readAsDataURL(imageBlob); 
             readerMainImage.onloadend = function() {
                 var base64dataMainImage = readerMainImage.result.split(',')[1];
                 resizeBase64Img(base64dataMainImage, mainImg.width / faktorZmanjsevanja, mainImg.height / faktorZmanjsevanja).then(resizedBase64dataMainImage=>{
-                    
-                    //console.log(base64dataMainImage)
                     const resizedImageBase64 = resizedBase64dataMainImage[0].src.substr(22)
-                    //console.log(document.querySelector('#image1ForUpload').width)
-                    //console.log(document.querySelector('#image1ForUpload').height)
 
                     if (indexIfEdit == '-1') {
                         $.ajax({
@@ -924,8 +928,28 @@ function readBase64(base64Image) {
 }
 
 function makeNavigationLinkActive(whichLink) {
-    document.getElementById(whichLink + '1').classList.add('uk-active')
-    document.getElementById(whichLink + '2').classList.add('uk-active')
+    if (document.getElementById(whichLink + '1')) {
+        document.getElementById(whichLink + '1').classList.add('uk-active')
+    }
+    if (document.getElementById(whichLink + '2')) {
+        document.getElementById(whichLink + '2').classList.add('uk-active')
+    }
+
+    if (whichLink == 'novice_page') {
+        document.getElementById('slikaNaslovPodstrani').style = ""
+        document.getElementById('podstranText').innerHTML = "NOVICE"
+    } else if (whichLink == 'koledar_page') {
+        document.getElementById('slikaNaslovPodstrani').style = ""
+        document.getElementById('podstranText').innerHTML = "KOLEDAR"
+    } else if (whichLink == 'skupine_page') {
+        document.getElementById('slikaNaslovPodstrani').style = ""
+        document.getElementById('podstranText').innerHTML = "SKUPINE"
+    } 
+    else {
+        document.getElementById('slikaNaslovPodstrani').style = "display: none;"
+        document.getElementById('podstranText').innerHTML = ""
+    }
+
 }
 
 function addZadnjiClanek(base64Image, povzetek, clanekId) {
@@ -959,7 +983,7 @@ function addBase64ImageNaslovnica(base64Image, indexSlike, stAllImages) {
     const blob = b64toBlob(base64Image, contentType);
     const blobUrl = window.URL.createObjectURL(blob);
 
-    html = `<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 column imagesForLightbox">
+    html = `<div class="col-12 col-lg-4 col-md-6 col-sm-12 col-xs-12 column imagesForLightbox">
                 <div class="uk-inline uk-margin-small-left uk-margin-medium-bottom text-center">
                     <img src="${blobUrl}" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">
                     <!--<canvas width="600" height="400"></canvas>-->
