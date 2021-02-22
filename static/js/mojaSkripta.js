@@ -750,7 +750,22 @@ function izbrisiClanek(indexIfEdit) {
 
 var vProcesuShranjevanja = false
 
+function resizeBase64Img(base64, width, height) {
+    var canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    var context = canvas.getContext("2d");
+    var deferred = $.Deferred();
+    $("<img/>").attr("src", "data:image/gif;base64," + base64).load(function() {
+        context.scale(width/this.width,  height/this.height);
+        context.drawImage(this, 0, 0); 
+        deferred.resolve($("<img/>").attr("src", canvas.toDataURL()));               
+    });
+    return deferred.promise();    
+}
+
 function uploadClanek(indexIfEdit) {
+    console.log("uppload clanek")
     if (vProcesuShranjevanja) {
         return
     }
@@ -760,68 +775,81 @@ function uploadClanek(indexIfEdit) {
     const vsebina = document.querySelector('#vsebina').value
     const povzetek = document.querySelector('#povzetek').value
     const password = document.querySelector('#pass').value
+    const mainImg = document.querySelector('#image1ForUpload')
+
+    const maxWidth = 300
+    const faktorZmanjsevanja = mainImg.width / maxWidth
     
     othrBase64dataImages = []
 
-    if (imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
+    if (true || imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
         convertImagesToBase64(0, function() {
             var readerMainImage = new FileReader();
             readerMainImage.readAsDataURL(imageBlob); 
             readerMainImage.onloadend = function() {
                 var base64dataMainImage = readerMainImage.result.split(',')[1];
-                
-                if (indexIfEdit == '-1') {
-                    $.ajax({
-                        url: 'create',
-                        type: 'POST',
-                        data: {
-                            title: title,
-                            subtitle: subtitle,
-                            vsebina: vsebina,
-                            povzetek: povzetek,
-                            image1: base64dataMainImage,
-                            othr_images: othrBase64dataImages,
-                            password: password
-                        },
-                        success: function () {
-                            window.location.href = '/';
-                            alert("Članek je bil uspešno objavljen")
-                            vProcesuShranjevanja = false
-                        },
-                        error: function() {
-                            alert("Žal ste vnesli napačno geslo")
-                            vProcesuShranjevanja = false
-                        }
-                    });
-                } else {
-                    var changedImages = 'false'
-                    if (spremenilKaksnoSliko) {
-                        changedImages = 'true'
-                    }
+                resizeBase64Img(base64dataMainImage, mainImg.width / faktorZmanjsevanja, mainImg.height / faktorZmanjsevanja).then(resizedBase64dataMainImage=>{
+                    
+                    //console.log(base64dataMainImage)
+                    const resizedImageBase64 = resizedBase64dataMainImage[0].src.substr(22)
+                    //console.log(document.querySelector('#image1ForUpload').width)
+                    //console.log(document.querySelector('#image1ForUpload').height)
 
-                    $.ajax({
-                        url: '/' + indexIfEdit + '/edit?changed_images=' + changedImages,
-                        type: 'POST',
-                        data: {
-                            title: title,
-                            subtitle: subtitle,
-                            vsebina: vsebina,
-                            povzetek: povzetek,
-                            image1: base64dataMainImage,
-                            othr_images: othrBase64dataImages,
-                            password: password
-                        },
-                        success: function () {
-                            window.location.href = '/' + indexIfEdit;
-                            alert("Članek je bil uspešno posodobljen")
-                            vProcesuShranjevanja = false
-                        },
-                        error: function() {
-                            alert("Žal ste vnesli napačno geslo")
-                            vProcesuShranjevanja = false
+                    if (indexIfEdit == '-1') {
+                        $.ajax({
+                            url: 'create',
+                            type: 'POST',
+                            data: {
+                                title: title,
+                                subtitle: subtitle,
+                                vsebina: vsebina,
+                                povzetek: povzetek,
+                                image1: base64dataMainImage,
+                                image1Smaller: resizedImageBase64,
+                                othr_images: othrBase64dataImages,
+                                password: password
+                            },
+                            success: function () {
+                                window.location.href = '/';
+                                alert("Članek je bil uspešno objavljen")
+                                vProcesuShranjevanja = false
+                            },
+                            error: function() {
+                                alert("Žal ste vnesli napačno geslo")
+                                vProcesuShranjevanja = false
+                            }
+                        });
+                    } else {
+                        var changedImages = 'false'
+                        if (spremenilKaksnoSliko) {
+                            changedImages = 'true'
                         }
-                    });
-                }
+
+                        $.ajax({
+                            url: '/' + indexIfEdit + '/edit?changed_images=' + changedImages,
+                            type: 'POST',
+                            data: {
+                                title: title,
+                                subtitle: subtitle,
+                                vsebina: vsebina,
+                                povzetek: povzetek,
+                                image1: base64dataMainImage,
+                                image1Smaller: resizedImageBase64,
+                                othr_images: othrBase64dataImages,
+                                password: password
+                            },
+                            success: function () {
+                                window.location.href = '/' + indexIfEdit;
+                                alert("Članek je bil uspešno posodobljen")
+                                vProcesuShranjevanja = false
+                            },
+                            error: function() {
+                                alert("Žal ste vnesli napačno geslo")
+                                vProcesuShranjevanja = false
+                            }
+                        });
+                    }
+                });
             }
         })
     } else {

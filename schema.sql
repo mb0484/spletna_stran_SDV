@@ -8,7 +8,8 @@ CREATE TABLE clanek (
     subtitle TEXT NOT NULL,
     content TEXT NOT NULL,
     short_content TEXT NOT NULL,
-    image1 BLOB NOT NULL
+    image1 BLOB NOT NULL,
+    image1Smaller BLOB NOT NULL
     /*ostaliImagesId REFERENCES slika_k_clanku(ID)*/
 );
 

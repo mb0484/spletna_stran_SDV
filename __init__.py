@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug import exceptions
 
 def get_db_connection():
-    conn = sqlite3.connect('/var/www/spletna_stran_SDV/spletna_stran_SDV/database.db')
+    conn = sqlite3.connect('/var/www/spletna_stran_SDV/spletna_stran_SDV/database.db') #/var/www/spletna_stran_SDV/spletna_stran_SDV/
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -30,7 +30,7 @@ def index():
     conn = get_db_connection()
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT * FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 
@@ -107,6 +107,7 @@ def edit_novica(novica_id):
         vsebina = request.form.get("vsebina")
         povzetek = request.form.get("povzetek")
         image1 = request.form.get("image1")
+        image1Smaller = request.form.get("image1Smaller")
         othr_images = request.form.getlist('othr_images[]')
         password = request.form.get("password")
 
@@ -124,9 +125,9 @@ def edit_novica(novica_id):
                 flash('At least one image is required!')
             else:
                 conn = get_db_connection()
-                conn.execute('UPDATE clanek SET title = ?, subtitle = ?, content = ?, short_content = ?, image1 = ?'
+                conn.execute('UPDATE clanek SET title = ?, subtitle = ?, content = ?, short_content = ?, image1 = ?, image1Smaller = ?'
                             ' WHERE id = ?',
-                            (title, subtitle, vsebina, povzetek, image1, novica_id))
+                            (title, subtitle, vsebina, povzetek, image1, image1Smaller, novica_id))
 
                 changed_images = request.args['changed_images']
 
@@ -175,6 +176,7 @@ def create():
         vsebina = request.form.get("vsebina")
         povzetek = request.form.get("povzetek")
         image1 = request.form.get("image1")
+        image1Smaller = request.form.get("image1Smaller")
         othr_images = request.form.getlist('othr_images[]')
         password = request.form.get("password")
 
@@ -192,8 +194,8 @@ def create():
             else:
                 conn = get_db_connection()
                 cursor = conn.cursor()
-                cursor.execute('INSERT INTO clanek (title, subtitle, content, short_content, image1) VALUES (?, ?, ?, ?, ?)',
-                            (title, subtitle, vsebina, povzetek, image1))
+                cursor.execute('INSERT INTO clanek (title, subtitle, content, short_content, image1, image1Smaller) VALUES (?, ?, ?, ?, ?, ?)',
+                            (title, subtitle, vsebina, povzetek, image1, image1Smaller))
                 clanek_id = cursor.lastrowid;
                 print("clanek id je", clanek_id)
 
