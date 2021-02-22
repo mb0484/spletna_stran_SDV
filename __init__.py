@@ -30,7 +30,7 @@ def index():
     conn = get_db_connection()
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 
