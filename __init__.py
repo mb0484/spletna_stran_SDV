@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug import exceptions
 
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('/var/www/spletna_stran_SDV/spletna_stran_SDV/database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
