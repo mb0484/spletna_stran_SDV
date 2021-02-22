@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="uk-cover-container">
+        <canvas width="400" height="200"></canvas>
+        <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
+        <div class="uk-overlay uk-position-bottom uk-light">
+            <center><h1 class="podstrani_text">SKUPINE</h1></center>
+        </div>
+    </div>
+
+    <div class="uk-container">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-margin-large-left uk-margin-medium-right">
+                <div class="uk-card-media-top">
+                    <div uk-slideshow>
+                        <ul class="uk-slideshow-items">
+                            <li>
+                                <img src="static/slike/slika_skupine1.jpg" alt="">
+                            </li>
+                            <li>
+                                <img src="static/slike/slika_skupine2.jpg" alt="">
+                            </li>
+                        </ul>
+
+                        <a class="uk-position-top-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                        <a class="uk-position-top-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                    </div>
+                </div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title overlay_naslov_text">Študentska skupina</h3>
+                    <p class="clanek_text">Skupina je namenjena vsem študentom. Poteka vsak drugi teden. V okviru skupine, sta bila lani tudi organizirani dve srečanji, eno v hribih in eno na Ljubljanskem gradu.</p>
+                    <p class="clanek_text"><bold>KDAJ SE DOBIVAMO:</bold> Vsak drugi torek, od 8.00 do 9.30</p>
+                    <p class="clanek_text"><bold>KJE SE DOBIVAMO:</bold> Gnidičeva dvorana.</p>
+                </div>
+            </div>
+
+            <div>
+                <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-margin-large-left uk-margin-medium-right">
+                    <div uk-slideshow>
+                        <ul class="uk-slideshow-items">
+                            <li>
+                                <img src="static/slike/slika_skupine1.jpg" alt="">
+                            </li>
+                            <li>
+                                <img src="static/slike/slika_skupine2.jpg" alt="">
+                            </li>
+                        </ul>
+
+                        <a class="uk-position-top-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                        <a class="uk-position-top-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                    </div>
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title overlay_naslov_text">Tek na grad</h3>
+                        <p class="clanek_text">Namen skupine je spodbujati telesno priprvljenost stanvalcev, z organiziranim vsakotednskim tekom na grad.</p>
+                        <p class="clanek_text"><bold>KDAJ SE DOBIVAMO:</bold> Vsak drugi petek, od 8.00 do 9.30</p>
+                        <p class="clanek_text"><bold>KJE SE DOBIVAMO:</bold> Gnidičeva dvorana.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-margin-medium-left uk-margin-large-right">
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title overlay_naslov_text">Pevski zbor</h3>
+                    <p class="clanek_text">Namen pevsekega zbora v študentskem domu je popestritev vsakega dogodka in druženje petja željnih stanovalcev.</p>
+                    <p class="clanek_text"><bold>KDAJ SE DOBIVAMO:</bold> Vsak drugi četrtek, od 8.00 do 9.30</p>
+                    <p class="clanek_text"><bold>KJE SE DOBIVAMO:</bold> Gnidičeva dvorana.</p>
+                </div>
+                <!--<div class="uk-card-media-bottom">
+                    <img src="static/slike/slika_skupine2.jpg" alt="">
+                </div>-->
+            </div>
+
+            <div>
+                <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-margin-medium-left uk-margin-large-right">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title overlay_naslov_text">Veterinarska skupina</h3>
+                        <p class="clanek_text">Namen skupine je vzgajati nove veterinarje in znanja željne študente.</p>
+                        <p class="clanek_text"><bold>KDAJ SE DOBIVAMO:</bold> Vsak drugi ponedeljek, od 8.00 do 9.30</p>
+                        <p class="clanek_text"><bold>KJE SE DOBIVAMO:</bold> Gnidičeva dvorana.</p>
+                    </div>
+                    <div uk-slideshow>
+                        <ul class="uk-slideshow-items">
+                            <li>
+                                <img src="static/slike/slika_skupine1.jpg" alt="">
+                            </li>
+                            <li>
+                                <img src="static/slike/slika_skupine2.jpg" alt="">
+                            </li>
+                        </ul>
+
+                        <a class="uk-position-bottom-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                        <a class="uk-position-bottom-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-medium-bottom uk-margin-medium-left uk-margin-large-right">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title overlay_naslov_text">Veterinarska skupina</h3>
+                        <p class="clanek_text">Namen skupine je vzgajati nove veterinarje in znanja željne študente.</p>
+                        <p class="clanek_text"><bold>KDAJ SE DOBIVAMO:</bold> Vsako drugo sredo, od 8.00 do 9.30</p>
+                        <p class="clanek_text"><bold>KJE SE DOBIVAMO:</bold> Gnidičeva dvorana.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type = "text/javascript">
+        makeNavigationLinkActive('skupine_page')
+    </script>
+
+{% endblock %}

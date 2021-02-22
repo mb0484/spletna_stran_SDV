@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SDV</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="stylesheet" href="/static/css/uikit.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/js/mojaSkripta.js"></script>
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/uikit-icons.min.js"></script>
+</head>
+    <body>
+
+        <!--GLAVA-->
+
+        <nav style="height: 80px;" class="uk-navbar-container navigacija" uk-navbar>
+
+            <div class="uk-navbar-left uk-padding-small uk-margin-medium-left">
+                <img style="width: 70px; height: 50px;" src="/static/slike/vincencij_logo.jpg">
+            </div>
+
+
+            <div id="navigacija_telefon" class="uk-navbar-right menu">
+
+                <button class="uk-margin-medium-right" uk-icon="icon: table; ratio: 2" type="button" uk-toggle="target: #offcanvas-flip"></button>
+
+                <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+                    <div class="uk-offcanvas-bar">
+
+                        <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+                        <ul class="uk-nav uk-nav-default">
+                            <li id="home_page1"><a href="{{ url_for('index')}}"><p class="navigaciija_text">Vincencij</p></a></li>
+                            <li id="novice_page1"><a href="{{ url_for('novice')}}"><p class="navigaciija_text">Novice</p></a></li>
+                            <li id="koledar_page1"><a href="{{ url_for('koledar')}}"><p class="navigaciija_text">Koledar</p></a></li>
+                            <!--<li ><a href=""><p class="navigaciija_text">Koledar</p></a></li>-->
+                            <li id="skupine_page1"><a href="{{ url_for('skupine')}}"><p class="navigaciija_text">Skupine</p></a></li>
+                            <li ><a href="#"><p class="navigaciija_text">Kontakt</p></a></li>
+                            <div uk-dropdown="mode: click">
+
+                                <p class="kontakt">NASLOV: Tabor 12, 1000 Ljubljana, Slovenija</p>
+                                <p class="kontakt">TELEFON: 031 827 858</p>
+                                <p class="kontakt">EMAIL: tilen.princic@gmail.com</p>
+
+
+
+                            </div>
+                        </div>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div id="navigacija" class="uk-navbar-right menu">
+
+                <ul class="uk-navbar-nav uk">
+                    <li id="home_page2"><a href="{{ url_for('index')}}"><p class="navigaciija_text">Vincencij</p></a></li>
+                    <li id="novice_page2"><a href="{{ url_for('novice')}}"><p class="navigaciija_text">Novice</p></a></li>
+                    <li id="koledar_page2"><a href="{{ url_for('koledar')}}"><p class="navigaciija_text">Koledar</p></a></li>
+                    <!--<li ><a href=""><p class="navigaciija_text">Koledar</p></a></li>-->
+                    <li id="skupine_page2"><a href="{{ url_for('skupine')}}"><p class="navigaciija_text">Skupine</p></a></li>
+                    <li ><a href="#"><p class="navigaciija_text">Kontakt</p></a></li>
+                    <div uk-dropdown="mode: click">
+
+                        <p class="kontakt">NASLOV: Tabor 12, 1000 Ljubljana, Slovenija</p>
+                        <p class="kontakt">TELEFON: 031 827 858</p>
+                        <p class="kontakt">EMAIL: tilen.princic@gmail.com</p>
+
+
+
+                    </div>
+                </ul>
+            </div>
+        </nav>
+        <div class="">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+            {% block content %} {% endblock %}
+        </div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>-->
+
+        <footer class="uk-background-secondary uk-contrast uk-margin-remove-top">
+            <div class="uk-container uk-container uk-margin-small-top">
+                <div class="uk-grid">
+                    <div class="uk-width-1-2 footerText">
+                        <p class="clanek_text">Follow US:
+                        <i class="fab fa-facebook-f footerText"></i>
+                        </p>
+                    </div>
+                    <div class="uk-width-1-2 footerText uk-text-right clanek_text">
+                        &copy; copyright ŠTUDENTSKI DOM VINCENCIJ
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

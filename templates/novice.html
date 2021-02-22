@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="uk-cover-container">
+        <canvas width="400" height="200"></canvas>
+        <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
+        <div class="uk-overlay uk-position-bottom uk-light">
+            <center><h1 class="podstrani_text">NOVICE</h1></center>
+        </div>
+    </div> 
+
+    <div class="uk-container">
+        <div class="uk-container uk-container-expand uk-margin-remove-top">
+
+            <div class="uk-grid">
+                <div id="glavna_novica" class="uk-width-3-4">
+                    <div class="uk-container uk-container uk-container-center uk-background-blend-lighten uk-margin-medium-top uk-margin-medium-bottom uk-text-center">
+
+
+                        <article class="uk-article">
+
+                            <!--<h1 class="uk-article-title naslov_text"><a class="uk-link-reset" href="">Slovenski katoliški dom Vincencij: Pri nas ni nihče sam</a></h1>-->
+                            <h1 class="uk-article-title naslov_text"><a class="uk-link-reset" href="">{{ clanek['title'] }}</a></h1>
+
+                            <p class="uk-article-meta"><a href="#"></a><a href="#"></a></p>
+
+                            <!--<p class="uk-text-lead pod_naslov_text">V slovenskih katoliških domovih v Ljubljani, Mariboru in Kopru je študentom na voljo približno 500 postelj.</p>-->
+                            <p class="uk-text-lead pod_naslov_text">{{ clanek['subtitle'] }}</p>
+
+                            <!--<img src="static/slike/novica2.jpg" alt="">-->
+                            <img id="naslovnaSlika"/>
+
+                            <!--<p id="novice_text" style="font-size:1.5vw;" class="besedilo_stran clanek_text">
+                                Mestni trušč, nato nihanje dvojnih vrat in vstop v tišino. Pomirjujoče, a ne resnobno. Pred nami dolg hodnik, sem in tja pred vrati čevlji, vsepovsod pa mir, kakor se najbrž spodobi za zadnje majske dni, ko naj bi imeli študenti pred sabo en sam resen cilj, študij. »Prav te dni sprejemamo še zadnje prijave za prihodnje študijsko leto,« pojasnita Leopold Charles Valant, duhovnik in ravnatelj študentskega doma Vincencij, in njegov pomočnik Boštjan Marinko.
+
+                                V stavbi na Taboru v Ljubljani je prostora za 125 deklet in fantov, letos je prošenj skoraj 90, vsako leto se zamenja med 20 in 30 stanovalcev. »Za nas ni recesije,« se zasmeji pomočnik v stavbi na privlačni lokaciji, od koder je do večine fakultet mogoče priti z mestnim avtobusom, če ne kar peš.
+
+                                V slovenskih katoliških domovih v Ljubljani, Mariboru in Kopru je študentom na voljo približno 500 postelj, najstarejši dom pa je ravno ljubljanski Vincencij, ki deluje od leta 1994. Pred šestimi leti so ga prenovili in razširili, nekaj dela pa še čaka: v pritličju bi radi uredili družabno sobo, na podstrehi je delno opremljena molilnica. Čeprav je povpraševanje po dvoposteljnih sobah veliko, možnosti za širitev ni več. Zaradi skrbnih gospodarjev, med katerimi so tudi študenti, pa še vedno diši po novem, ugotavljajo novinci. Ti prihajajo z vseh koncev Slovenije, hodijo na najrazličnejše fakultete, osnovna pogoja za sprejem oziroma nadaljnje bivanje pa sta socialni kriterij in reden študij.
+
+                                »Za sprejem v naš dom ne postavljamo strogih pogojev, res pa je, da od študentov pričakujemo, da so katoliškega nazora. Jasno, da nihče med nami ni svetnik, nekateri so bolj pobožni, drugi manj. Želimo pa, da se ob študiju vključujejo tudi v naše aktivnosti, od karitativnosti, pevskega zbora, gasilcev, dramskega krožka do športa in še česa. Zlasti spodbujamo dobrodelnost,« razloži Valant.
+
+                                V domu delujeta dve glasbeni skupini, organizirajo piknike, za kulturni praznik proslavo s plesom, tudi novoletni ples in pustno zabavo, vedno pa poskrbijo, da je prireditev na primerni ravni, pravi ravnatelj. Študenti se lahko udeležujejo duhovnih vaj, romanj, organizirano je molitveno življenje, enkrat na teden je sveta maša, pri kateri naj bi vsaka soba sodelovala enkrat na leto. Maše so zjutraj in zvečer. »Včasih pride eden, včasih dvajset, pa še ta privilegij imamo, da gremo lahko v cerkev kar v copatih,« pojasni ravnatelj.
+
+                                »Pri nas ni nihče čisto sam, razen če tako hoče. In nikogar v nič ne silimo,« še doda, študentje pa temu pozneje pritrdijo. Izbira je res velika, saj poleg naštetega delujejo tudi različni krožki oziroma skupine; v medicinski skupini, ki jo vodi ginekolog, kakšnih dvajset študentov medicine razpravlja o bioetičnih vprašanjih. Že tri leta deluje krožek teologije telesa, v katerem se pogovarjajo zlasti o krščanskem pogledu na spolnost. »Gre za teme, ki se zelo dotikajo človekove intime, pa nam gre kar dobro,« pojasni vodja Boštjan Marinko.
+
+                                Glavno vodilo doma na Taboru je ponuditi mladim najboljše možnosti za študij. Imajo hišni red, a ustanova deluje po mehkih pravilih, in če bi vsi spoštovali božjo zapoved ljubi svojega bližnjega kakor samega sebe, jih sploh ne bi potrebovali, pravi Valant. Kdaj kdo odhaja in prihaja, je njegova stvar, nikogar ne nadzorujejo, pojasnjuje. Tudi obiski zvečer so dovoljeni, če se prej napovejo, ob enajstih pa naj bi zavladala tišina. In če ne? »Potem moramo še kakšno reči, a načeloma ni težav,« pravi ravnatelj. Še največ jih je zaradi pospravljanja skupnih prostorov, predvsem kuhinje. »Tam se bije naša bitka,« smeje se doda. Podobno kot doma. In za številne študente je Vincencij res kot dom.
+
+                                Štiriindvajsetletni Tina Grohar in Anka Batič, ki končujeta študij – prva farmacije, druga restavratorstva –, že zdaj s kančkom nostalgije pričakujeta prihodnost. »Skupaj sva od drugega letnika in nama kar uspeva,« se zasmejita. »Tukaj je ful fajn. Moj študij je zahteven in dobro je, da imam mir, hkrati pa dovolj možnosti za sprostitev in druženje s prijatelji,« pravi Tina s Sorice, ki v teh dneh čaka rezultate zadnjih izpitov. Katoliški dom je bil njena izbira, ki bi jo z veseljem ponovila. Za Anko iz Ajdovščine, ki piše diplomo, je bila odločitev za dom na Taboru samoumevna, saj je tam stanovala že njena sestra. »Lokacija je super.« Pa skušnjave žurerskega študentskega življenja? »Ah, na fakulteti je bilo veliko dela, sicer pa za zabavo res ni nujno, da si v središču mesta. Tisto se da urediti tudi drugače,« se zasmejeta dekleti.
+
+                                »Tisti, ki želijo k nam, pričakujejo nekaj, česar drugje ne dobijo,« je prepričan ravnatelj. »Dom naj bi bil nadgradnja tistega, kar so imeli doma. Na fakulteti jih opremijo s strokovnim znanjem, a življenje je še vse kaj drugega.« Zato so študentje v njegovi pisarni vedno dobrodošli. »Nekateri pridejo vsak teden, drugi le redko.« V 15 letih je razvil poseben občutek, ki mu da hitro vedeti, koga bi lahko odneslo. »Nekateri se počutijo nemočne in najina vloga je, da se njihovi talenti razvijejo. Tu sva zato, da jih poslušava in usmerjava,« pravi ravnatelj. Osip je majhen, tistih, ki ne opravijo študijskih obveznosti, je največ pet na leto. Prav toliko, pet namreč, pa je tudi parov, ki so se spoznali v domu in se bodo še letos poročili.
+
+                            </p>-->
+                            <p id="novice_text" style="font-size:1.5vw;" class="besedilo_stran clanek_text">
+                                {{ clanek['content'] }}
+                            </p>
+
+                        </article>
+
+                        <!-- Images used to open the lightbox -->
+                        <div id="articleImages" class="row">
+                        </div>
+                        
+                        <!-- The Modal/Lightbox -->
+                        <div id="myModal1" class="modal">
+                            <span class="close cursor" onclick="closeModal('1')">&times;</span>
+                            <div id="modelLightboxImages" class="modal-content">
+                        
+                                <!--<div class="mySlides">
+                                    <div class="numbertext">1 / 4</div>
+                                    <img src="static/slike/clanek_cel1_slika2.jpg" style="width:100%">
+                                </div>
+                            
+                                <div class="mySlides">
+                                    <div class="numbertext">2 / 4</div>
+                                    <img src="static/slike/clanek_cel1_slika2.jpg" style="width:100%">
+                                </div>-->
+                            
+                                <!-- Next/previous controls -->
+                                <a class="prev" onclick="plusSlides(-1, '1')">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1, '1')">&#10095;</a>
+                            
+                                <!-- Caption text -->
+                                <div class="caption-container">
+                                    <p id="caption1"></p>
+                                </div>
+                            
+                                <!-- Thumbnail image controls example-->
+                                <!--<div class="column">
+                                    <img class="demo" src="img1.jpg" onclick="currentSlide(1)" alt="Nature">
+                                </div>
+                            
+                                <div class="column">
+                                    <img class="demo" src="img2.jpg" onclick="currentSlide(2)" alt="Snow">
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <!-- The Modal/Lightbox -->
+                        <div id="myModal2" class="modal">
+                            <span class="close cursor" onclick="closeModal('2')">&times;</span>
+                            <div id="modelLightboxLastImages" class="modal-content">
+                        
+                                <!--<div class="mySlides2">
+                                    <div class="numbertext">1 / 4</div>
+                                    <img src="static/slike/clanek_cel1_slika3.jpg" style="width:100%">
+                                </div>
+                            
+                                <div class="mySlides2">
+                                    <div class="numbertext">2 / 4</div>
+                                    <img src="static/slike/clanek_cel1_slika1.jpg" style="width:100%">
+                                </div>-->
+                            
+                                <!-- Next/previous controls -->
+                                <a class="prev" onclick="plusSlides(-1, '2')">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1, '2')">&#10095;</a>
+                            
+                                <!-- Caption text -->
+                                <div class="caption-container">
+                                    <p id="caption2"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="zadnje_slike" class="uk-width-1-4 uk-margin-xlarge-top uk-margin-medium-bottom uk-margin-remove-right">
+                    <div class="uk-container uk-overlay-primary uk-text-center">
+                        <h3 class="naslov_slike uk-margin-medium-top"><a class="uk-link-reset clanek_text" href="">zadnje slike</a></h3>
+
+                        <div id="lastImages" class="uk-grid">
+                            <!--<div class="uk-inline uk-margin-medium-left uk-margin-medium-right uk-margin-medium-top uk-margin-large-bottom lastImagesForLightbox">
+                                <img src="static/slike/clanek_cel1_slika3.jpg" onclick="openModal('2');currentSlide(1, '2')" class="hover-shadow">
+                            </div>
+                            <div class="uk-inline uk-margin-medium-left uk-margin-medium-right uk-margin-medium-top uk-margin-large-bottom lastImagesForLightbox">
+                                <img src="static/slike/clanek_cel1_slika1.jpg" onclick="openModal('2');currentSlide(2, '2')" class="hover-shadow">
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<center style="font-size:1.5vw;" class="besedilo_stran clanek_text">Vse novice</center>-->
+    <hr class="uk-divider-icon">
+
+    <div id="zadnjiClanki"  class="row" uk-grid>
+        <!--<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="uk-card uk-card-hover uk-card-body text-center">
+                <img class="fit" src="static/slike/novica1.jpg" alt="">
+
+                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    Na podstrehi doma so po zamisli ene od študentk, Andjelke, uredili molilnico. Sploh so predlogi stanovalcev dobrodošli in tako so lani na pobudo enega od njih...
+                </p>
+
+                <button class="uk-button uk-button-danger uk-button-small clanek_text"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="uk-card uk-card-hover uk-card-body text-center">
+
+                <img class="fit" src="static/slike/novica2.jpg" alt="">
+
+                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    »Marsikdo misli, da so tu sami župniki, pa to sploh ne drži,« pravi 24-letni absolvent Lovro Bakšič z Rake na Dolenjskem...
+                </p>
+
+                <button class="uk-button uk-button-danger uk-button-small clanek_text"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="uk-card uk-card-hover uk-card-body text-center">
+
+                <img class="fit" src="static/slike/novica4.jpg" alt="">
+
+                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    Včeraj nas je obiskal ljubljanski nadškof msgr. Stanislav Zore. Skupaj smo se pogovarjali o izzivih s katerimi se mladi srečujemo v Cerkvi in družbi...
+                </p>
+
+                <button class="uk-button uk-button-danger uk-button-small clanek_text"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="uk-card uk-card-hover uk-card-body text-center">
+                <img class="fit" src="static/slike/novica3.jpg" alt="">
+
+                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    Včeraj se je iztekel moj mandat predsedovanja Študentskemu domu Vincencij. Bilo je zares izjemno leto, polno različnih dogodkov in dobrega sodelovanja.
+                    Hvala vsem...
+                </p>
+
+                <button class="uk-button uk-button-danger uk-button-small"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
+
+            </div>
+        </div>-->
+    </div>
+
+    <script type = "text/javascript">
+        readBase64("{{ clanek['image1'] }}")
+    </script>
+
+    {% for clanek_slika in clanek_ostale_slike %}
+        <script type = "text/javascript">
+            addBase64Image("{{ clanek_slika['image_blob'] }}", "{{loop.index0}}", "1", "{{clanek_ostale_slike|count}}")
+        </script>
+    {% endfor %}
+
+    {% for zadnja_slika in zadnje_slike %}
+        <script type = "text/javascript">
+            addBase64Image("{{ zadnja_slika['image_blob'] }}", "{{loop.index0}}", "2", "{{zadnje_slike|count}}")
+        </script>
+    {% endfor %}
+
+    {% for zadnji_clanek in zadnji_clanki %}
+        <script type = "text/javascript">
+            addZadnjiClanek("{{ zadnji_clanek['image1'] }}", "{{ zadnji_clanek['short_content'] }}", "{{ zadnji_clanek['id'] }}")
+        </script>
+    {% endfor %}
+
+    <script type = "text/javascript">
+        makeNavigationLinkActive('novice_page')
+    </script>
+
+{% endblock %}

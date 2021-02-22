@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="uk-position-relative uk-visible-toggle uk-light" uk-slideshow="ratio: 7:3.3; animation: fade">
+
+        <ul class="uk-slideshow-items">
+            <li>
+                <img src="static/slike/coverPhoto3.jpg" alt="" uk-cover>
+
+                <div id="naslovnicaDodatek2" class="uk-overlay uk-overlay-primary uk-position-right uk-text-center uk-transition-slide-right uk-width-medium">
+                    <h2 class="opis_O_Nas overlay_naslov_text">
+                        KDO SMO?
+                    </h2>
+
+                    <p class="opis_O_Nas clanek_text">
+                        V večini smo študentje ene izmed fakultet univerze v Ljubljani. V domu smo med seboj povezani, se družimo, kar nas osrečuje in navdihuje dom s pozitivno energijo.
+                    </p>
+                </div>
+            </li>
+            <li> 
+                <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
+                <div id="naslovnicaDodatek"  class="collapse uk-overlay uk-overlay-primary uk-position-left uk-text-center uk-transition-slide-left uk-width-large">
+                    <h3 class="uk-margin-remove overlay_naslov_text">SV. VINCENCIJ</h3>
+                    <img class="fit uk-margin-top" src="static/slike/vincencij.jpg" class="uk-margin-top">
+                    <p class="uk-margin-top clanek_text">Sv. Vincencij Pavelski je deloval v času konec 16. in začetek 17. stoletja. Z leti prizadevanja za pomoč ubogim je postal dobrodelnik, ki je med revne razdelil več denarja, kot ga je v njegovem času imela francoska državna banka. Sodeloval je s sv. Ludoviko Marillac. Skupaj sta tudi ustanovila Hčere krščanske ljubezni (Usmiljenke). Živel je preprosto in življenjsko duhovnost.</p>
+                </div>
+
+                <div class="uk-position-bottom-right uk-position-small uk-text-center uk-light">
+                    <h2 style="font-size:2.5vw;" class="quote">'Kindness is free sprinkie that stuff everywhere'</h2>
+                </div>
+            </li>
+        </ul>
+
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+    </div>
+
+
+
+    <div id="zadnjiClanki" class="row" uk-grid>
+        <!--<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+            <div class="uk-card uk-card-hover uk-card-body text-center">
+                <img class="fit" src="static/slike/novica1.jpg" alt="">
+
+                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    Na podstrehi doma so po zamisli ene od študentk, Andjelke, uredili molilnico. Sploh so predlogi stanovalcev dobrodošli in tako so lani na pobudo enega od njih...
+                </p>
+
+                <button class="uk-button uk-button-danger uk-button-small"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
+            </div>
+        </div>-->
+    </div>
+
+    <!--<p>Right arrow: <i class="arrow right"></i></p>-->
+    <div style="margin-top: 0em; margin-right: 2em;">
+        <a href="/novice" style="float: right;" class="uk-button uk-button-danger uk-button-small"><p class="clanek_text uk-margin-remove">Ostale novice <i class="arrow right"></i></p></a>
+    </div>
+
+    <div style="margin-top: 3em;">
+        <hr class="uk-divider-icon">
+    </div>
+
+    <!-- Images used to open the lightbox -->
+    <div id="articleImages" class="row" uk-grid>
+    </div>
+    
+    <!-- The Modal/Lightbox -->
+    <div id="myModal1" class="modal">
+        <span class="close cursor" onclick="closeModal('1')">&times;</span>
+        <div id="modelLightboxImages" class="modal-content">
+        
+            <!-- Next/previous controls -->
+            <a class="prev" onclick="plusSlides(-1, '1')">&#10094;</a>
+            <a class="next" onclick="plusSlides(1, '1')">&#10095;</a>
+        
+            <!-- Caption text -->
+            <div class="caption-container">
+                <p id="caption1"></p>
+            </div>
+        </div>
+    </div>
+
+
+{% for zadnja_slika in zadnje_slike %}
+<script type = "text/javascript">
+    addBase64ImageNaslovnica("{{ zadnja_slika['image_blob'] }}", "{{loop.index0}}", "{{zadnje_slike|count}}")
+</script>
+{% endfor %}
+
+{% for zadnji_clanek in zadnji_clanki %}
+<script type = "text/javascript">
+    addZadnjiClanek("{{ zadnji_clanek['image1'] }}", "{{ zadnji_clanek['short_content'] }}", "{{ zadnji_clanek['id'] }}")
+</script>
+{% endfor %}
+
+<script type = "text/javascript">
+    makeNavigationLinkActive('home_page')
+</script>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="uk-cover-container">
+        <canvas width="400" height="200"></canvas>
+        <img src="static/slike/coverPhoto2.jpg" alt="" uk-cover>
+        <div class="uk-overlay uk-position-bottom uk-light">
+            <center><h1 class="podstrani_text">KOLEDAR</h1></center>
+        </div>
+    </div>
+    
+    
+    <div id="koledar_card_view" class="uk-card uk-card-default uk-card-body uk-margin-large-right uk-margin-large-bottom uk-margin-large-left uk-margin-large-top">
+
+        <div class="row">
+
+            <div class="col-lg-6 uk-margin-large-bottom">
+
+                <div class="calendar">
+
+                    <div class="row">
+                        <div class="col-4">
+
+                            <p onclick="spremeniMesecNazaj()" id="koledar_prev" style="font-size:3vw;" class="uk-text-center">&#8249;</p>
+
+                        </div>
+                        <div class="col-4">
+
+                            <p id="koledar_mesec" style="font-size:3vw;" class="uk-text-center">September</p>
+
+                        </div>
+                        <div class="col-4">
+
+                            <p onclick="spremeniMesecNaprej()" id="koledar_next" style="font-size:3vw;" class="uk-text-center">&#8250;</p>
+
+                        </div>
+                    </div>
+                    
+                    <table>
+                    
+                        <thead>
+                            
+                            <tr>
+                                
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Mo</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Tu</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">We</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Th</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Fr</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Sa</td>
+                                <td style="font-size:0.68vw;" class="koledar_dnevi">Su</td>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                            
+                            <tr>
+                                <td onclick="spremeniCurDan('1pon')" id="1pon" style="font-size:0.68vw;" class="prev-month koledar_dnevi">26</td>
+                                <td onclick="spremeniCurDan('1tor')" id="1tor" style="font-size:0.68vw;" class="prev-month koledar_dnevi">27</td>
+                                <td onclick="spremeniCurDan('1sre')" id="1sre" style="font-size:0.68vw;" class="prev-month koledar_dnevi">28</td>
+                                <td onclick="spremeniCurDan('1cet')" id="1cet" style="font-size:0.68vw;" class="prev-month koledar_dnevi">29</td>
+                                <td onclick="spremeniCurDan('1pet')" id="1pet" style="font-size:0.68vw;" class="prev-month koledar_dnevi">30</td>
+                                <td onclick="spremeniCurDan('1sob')" id="1sob" style="font-size:0.68vw;" class="prev-month koledar_dnevi">31</td>
+                                <td onclick="spremeniCurDan('1ned')" id="1ned" style="font-size:0.68vw;" class="koledar_dnevi">1</td>
+                            </tr>
+                            <tr>
+                                <td onclick="spremeniCurDan('2pon')" id="2pon" style="font-size:0.68vw;" class="koledar_dnevi">2</td>
+                                <td onclick="spremeniCurDan('2tor')" id="2tor" style="font-size:0.68vw;" class="koledar_dnevi">3</td>
+                                <td onclick="spremeniCurDan('2sre')" id="2sre" style="font-size:0.68vw;" class="koledar_dnevi">4</td>
+                                <td onclick="spremeniCurDan('2cet')" id="2cet" style="font-size:0.68vw;" class="koledar_dnevi">5</td>
+                                <td onclick="spremeniCurDan('2pet')" id="2pet" style="font-size:0.68vw;" class="koledar_dnevi">6</td>
+                                <td onclick="spremeniCurDan('2sob')" id="2sob" style="font-size:0.68vw;" class="koledar_dnevi">7</td>
+                                <td onclick="spremeniCurDan('2ned')" id="2ned" style="font-size:0.68vw;" class="koledar_dnevi">8</td>
+                            </tr>
+                            <tr>
+                                <td onclick="spremeniCurDan('3pon')" id="3pon" style="font-size:0.68vw;" class="koledar_dnevi">9</td>
+                                <td onclick="spremeniCurDan('3tor')" id="3tor" style="font-size:0.68vw;" class="event koledar_dnevi">10</td>
+                                <td onclick="spremeniCurDan('3sre')" id="3sre" style="font-size:0.68vw;" class="koledar_dnevi">11</td>
+                                <td onclick="spremeniCurDan('3cet')" id="3cet" style="font-size:0.68vw;" class="koledar_dnevi">12</td>
+                                <td onclick="spremeniCurDan('3pet')" id="3pet" style="font-size:0.68vw;" class="koledar_dnevi">13</td>
+                                <td onclick="spremeniCurDan('3sob')" id="3sob" style="font-size:0.68vw;" class="koledar_dnevi">14</td>
+                                <td onclick="spremeniCurDan('3ned')" id="3ned" style="font-size:0.68vw;" class="koledar_dnevi">15</td>
+                            </tr>
+                            <tr>
+                                <td onclick="spremeniCurDan('4pon')" id="4pon" style="font-size:0.68vw;" class="koledar_dnevi">16</td>
+                                <td onclick="spremeniCurDan('4tor')" id="4tor" style="font-size:0.68vw;" class="koledar_dnevi">17</td>
+                                <td onclick="spremeniCurDan('4sre')" id="4sre" style="font-size:0.68vw;" class="koledar_dnevi">18</td>
+                                <td onclick="spremeniCurDan('4cet')" id="4cet" style="font-size:0.68vw;" class="koledar_dnevi">19</td>
+                                <td onclick="spremeniCurDan('4pet')" id="4pet" style="font-size:0.68vw;" class="koledar_dnevi">20</td>
+                                <td onclick="spremeniCurDan('4sob')" id="4sob" style="font-size:0.68vw;" class="event koledar_dnevi">21</td>
+                                <td onclick="spremeniCurDan('4ned')" id="4ned" style="font-size:0.68vw;" class="koledar_dnevi">22</td>
+                            </tr>
+
+                            <tr>
+                                <td onclick="spremeniCurDan('5pon')" id="5pon" style="font-size:0.68vw;" class="current-day event koledar_dnevi">23</td>
+                                <td onclick="spremeniCurDan('5tor')" id="5tor" style="font-size:0.68vw;" class="koledar_dnevi">24</td>
+                                <td onclick="spremeniCurDan('5sre')" id="5sre" style="font-size:0.68vw;" class="koledar_dnevi">25</td>
+                                <td onclick="spremeniCurDan('5cet')" id="5cet" style="font-size:0.68vw;" class="koledar_dnevi">26</td>
+                                <td onclick="spremeniCurDan('5pet')" id="5pet" style="font-size:0.68vw;" class="koledar_dnevi">27</td>
+                                <td onclick="spremeniCurDan('5sob')" id="5sob" style="font-size:0.68vw;" class="koledar_dnevi">28</td>
+                                <td onclick="spremeniCurDan('5ned')" id="5ned" style="font-size:0.68vw;" class="koledar_dnevi">29</td>
+                            </tr>
+                            <tr>
+                                <td onclick="spremeniCurDan('6pon')" id="6pon" style="font-size:0.68vw;" class="koledar_dnevi">30</td>
+                                <td onclick="spremeniCurDan('6tor')" id="6tor" style="font-size:0.68vw;" class="next-month koledar_dnevi">1</td>
+                                <td onclick="spremeniCurDan('6sre')" id="6sre" style="font-size:0.68vw;" class="next-month koledar_dnevi">2</td>
+                                <td onclick="spremeniCurDan('6cet')" id="6cet" style="font-size:0.68vw;" class="next-month koledar_dnevi">3</td>
+                                <td onclick="spremeniCurDan('6pet')" id="6pet" style="font-size:0.68vw;" class="next-month koledar_dnevi">4</td>
+                                <td onclick="spremeniCurDan('6sob')" id="6sob" style="font-size:0.68vw;" class="next-month koledar_dnevi">5</td>
+                                <td onclick="spremeniCurDan('6ned')" id="6ned" style="font-size:0.68vw;" class="next-month koledar_dnevi">6</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div> <!-- end calendar -->
+            </div>
+
+            <div class="col-lg-6">
+
+                <p id="koledar_datum" style="font-size:3vw;" class="uk-text-center">23. September 2018</p>
+
+                <p id="koledar_dan" style="font-size:2vw;" class="uk-text-center">ponedeljek</p>
+
+                <p id="koledar_dogodek" style="font-size:1.5vw;" class="uk-text-left uk-margin-large-left">Dogodki:</p>
+
+                <div id="dogodki">
+
+                    <p style="font-size:1.2vw;" class="koledar_dogodki uk-text-left uk-margin-large-left">- Srečanje skupine za rast</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type = "text/javascript">
+        makeNavigationLinkActive('koledar_page')
+    </script>
+
+{% endblock %}

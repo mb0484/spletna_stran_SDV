@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="uk-container">
+    <h1 class="objaviClanekNaslov">{% block title %} Uredi objavljen članek {% endblock %}</h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="title">Naslov</label>
+            <input id="title" type="text" name="Naslov"
+                placeholder="Naslov" class="form-control"
+                value="{{ clanek['title'] }}"></input>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Podnaslov</label>
+            <input id="subtitle" type="text" name="Podnaslov"
+                placeholder="Podnaslov" class="form-control"
+                value="{{ clanek['subtitle'] }}"></input>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Vsebina</label>
+            <textarea id="vsebina" name="content" placeholder="Vsebina članka"
+                    class="form-control" style="height: 500px;">{{ clanek['content'] }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Povzetek</label>
+            <textarea maxlength="220" id="povzetek" name="short_content" placeholder="Kratek povzetek članka"
+                    class="form-control" style="height: 150px;">{{ clanek['short_content'] }}</textarea>
+        </div>
+
+        <div>
+            <label for="pass">Vpišite geslo za editiranje ali izbris objave</label>
+            <input type="password" id="pass" name="password"
+                   minlength="8" required>
+        </div>
+
+        <div style="margin-bottom: 30px;" id="slike1Inputs"></div><div style="margin-bottom: 30px;" id="slike2Inputs"></div><div style="margin-bottom: 30px;" id="slike3Inputs"></div><div style="margin-bottom: 30px;" id="slike4Inputs"></div><div style="margin-bottom: 30px;" id="slike5Inputs"></div><div style="margin-bottom: 30px;" id="slike6Inputs"></div><div style="margin-bottom: 30px;" id="slike7Inputs"></div><div style="margin-bottom: 30px;" id="slike8Inputs"></div><div style="margin-bottom: 30px;" id="slike9Inputs"></div><div style="margin-bottom: 30px;" id="slike10Inputs"></div><div style="margin-bottom: 30px;" id="slike11Inputs"></div><div style="margin-bottom: 30px;" id="slike12Inputs"></div><div style="margin-bottom: 30px;" id="slike13Inputs"></div><div style="margin-bottom: 30px;" id="slike14Inputs"></div><div style="margin-bottom: 30px;" id="slike15Inputs"></div><div style="margin-bottom: 30px;" id="slike16Inputs"></div><div style="margin-bottom: 30px;" id="slike17Inputs"></div><div style="margin-bottom: 30px;" id="slike18Inputs"></div><div style="margin-bottom: 30px;" id="slike19Inputs"></div><div style="margin-bottom: 30px;" id="slike20Inputs"></div><div style="margin-bottom: 30px;" id="slike21Inputs"></div><div style="margin-bottom: 30px;" id="slike22Inputs"></div><div style="margin-bottom: 30px;" id="slike23Inputs"></div><div style="margin-bottom: 30px;" id="slike24Inputs"></div><div style="margin-bottom: 30px;" id="slike25Inputs"></div><div style="margin-bottom: 30px;" id="slike26Inputs"></div><div style="margin-bottom: 30px;" id="slike27Inputs"></div><div style="margin-bottom: 30px;" id="slike28Inputs"></div><div style="margin-bottom: 30px;" id="slike29Inputs"></div><div style="margin-bottom: 30px;" id="slike30Inputs"></div>
+
+    </form>
+
+    <button onclick="uploadAnotherImage()" class="btn btn-secondary">Naloži dodatno sliko</button>
+    <button onclick="removeLastImage()" class="btn btn-danger">Odstrani zadnjo sliko</button>
+
+    <button onclick="uploadClanek('{{ index_clanek_edit }}')" class="btn btn-primary objaviBtn">Objavi</button>
+    <button onclick="izbrisiClanek('{{ index_clanek_edit }}')" class="btn btn-danger izbrisiBtn">Izbriši članek</button>
+
+    <img id="naslovnaSlika"/>
+
+</div>
+
+{% for clanek_slika in clanek_ostale_slike %}
+    <script type = "text/javascript">
+        addBase64ImageForEdit("{{ clanek_slika['image_blob'] }}", "{{loop.index0}}", "{{clanek_ostale_slike|count}}")
+    </script>
+{% endfor %}
+
+{% endblock %}
