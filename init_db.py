@@ -8,13 +8,13 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-#cur.execute("INSERT INTO clanek (title, subtitle, content, short_content, image1) VALUES (?, ?, ?, ?, ?)",
-#            ('First Post', 'First sub post', 'content', 'short content', '')
-#            )
+cur.execute("INSERT INTO dogodkiVKoledarju (dogodekDatum, dogodekOpis) VALUES (?, ?)",
+            ('22-2-2021', "Predstavitev spletne strani")
+            )
 
-#cur.execute("INSERT INTO slika_k_clanku (clanek_id, image_blob) VALUES (?, ?)",
-#            (1, 'UoiuhkJHLkjhKJhlkJhlkJHlkjHLkjhlkJHlkJHlkjhLKjh')
-#            )
+cur.execute("INSERT INTO slika_k_clanku (dogodekDatum, dogodekOpis) VALUES (?, ?)",
+            ('23-2-2021', "Upam da danes kaj naredim")
+            )
 
 connection.commit()
 connection.close()

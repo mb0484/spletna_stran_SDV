@@ -379,13 +379,10 @@ var izdelajKoledar = function() {
     yyyy = today.getFullYear();
     curDatum = "" + dd + mm + yyyy;
     enkratSpremeni = true;
-    dogodkiVDomu = new Map();
-    dodajDogodekVDomu("18-10-2018", "Srečanje skupine za rast");
-    dodajDogodekVDomu("31-10-2018", "Srečanje mladih v domu");
-    dodajDogodekVDomu("18-10-2018", "Maša v domski cerkvi");
-    dodajDogodekVDomu("30-10-2018", "Še zadnji dan pred prazniki :)");
-    dodajDogodekVDomu("1-11-2018", "Dan spomina na mrtve");
-    dodajDogodekVDomu("31-12-2018", "Proba");
+    //dogodkiVDomu = new Map();
+    //dodajDogodekVDomu('22-2-2021', "Predstavitev spletne strani")
+    //dodajDogodekVDomu('23-2-2021', "Upam da danes kaj naredim")
+    //dodajDogodekVDomu("31-12-2018", "Proba");
     pobrisiPrikazDogodkov();
     if (dogodkiVDomu.get(dd + "-" + mm + "-" + yyyy) != null) {
         prikaziDogodek(dogodkiVDomu.get(dd + "-" + mm + "-" + yyyy));
@@ -394,14 +391,166 @@ var izdelajKoledar = function() {
     spremeniKoledar();
 }
 
+var pobrisiDogodkeVDomu = function() {
+    dogodkiVDomu = new Map();
+}
+
+vProcesuShranjevanja = false
+function shraniNovDogodekVKoledar() {
+    vProcesuShranjevanja = true
+    const opisDogodka = document.querySelector('#opisDogodka').value
+    const datumDogodka = document.querySelector('#datumDogodka').value
+    const password = document.querySelector('#pass').value
+
+    var datum = moment(datumDogodka, 'YYYY-MM-DD');
+
+    if (password != "" && opisDogodka != "" && datum.isValid() && datumDogodka.length >= 8 && datumDogodka.length <= 10
+        && datumDogodka.split("-").length == 3 && datumDogodka.split("-")[0].length > 0 && datumDogodka.split("-")[1].length > 0 && datumDogodka.split("-")[2].length > 0) {
+        //console.log("objavi")
+        const noviDatum = parseInt(datumDogodka.split("-")[2]) + "-" + parseInt(datumDogodka.split("-")[1]) + "-" + parseInt(datumDogodka.split("-")[0])
+
+        $.ajax({
+            url: '/koledar/dodaj',
+            type: 'POST',
+            data: {
+                datum: noviDatum,
+                opis: opisDogodka,
+                password: password
+            },
+            success: function () {
+                window.location.href = '/koledar';
+                alert("Dogodek je bil uspešno dodan")
+                vProcesuShranjevanja = false
+            },
+            error: function() {
+                alert("Žal ste vnesli napačno geslo")
+                vProcesuShranjevanja = false
+            }
+        });
+    } else {
+        vProcesuShranjevanja = false
+        var whatIsObligatory = ""
+        if (opisDogodka == "") {
+            whatIsObligatory += "Opis dogodka je obvezen. "
+        }
+        if (!datum.isValid() || datumDogodka.length < 8 || datumDogodka.length > 10 || datumDogodka.split("-").length != 3 || datumDogodka.split("-")[0].length == 0 || datumDogodka.split("-")[1].length == 0 || datumDogodka.split("-")[2].length == 0) {
+            whatIsObligatory += "Vnesli ste napačen datum. "
+        }
+        if (password == "") {
+            whatIsObligatory += "Prosimo vnesite geslo. "
+        }
+        alert(whatIsObligatory)
+    }
+}
+
+function poizvediZaDogodke() {
+    const datumDogodka = document.querySelector('#datumDogodka').value
+    const password = document.querySelector('#pass').value
+    
+
+    var datum = moment(datumDogodka, 'YYYY-MM-DD');
+
+    if (password != "" && datum.isValid() && datumDogodka.length >= 8 && datumDogodka.length <= 10
+        && datumDogodka.split("-").length == 3 && datumDogodka.split("-")[0].length > 0 && datumDogodka.split("-")[1].length > 0 && datumDogodka.split("-")[2].length > 0) {
+        
+        const noviDatum = parseInt(datumDogodka.split("-")[2]) + "-" + parseInt(datumDogodka.split("-")[1]) + "-" + parseInt(datumDogodka.split("-")[0])
+        
+        $.ajax({
+            url: '/koledar/brisi',
+            type: 'POST',
+            data: {
+                datum: noviDatum,
+                password: password
+            },
+            success: function (dogodki) {
+                splitDogodki = dogodki.split(";")
+
+                html = "<fieldset><legend>Katere Dogodke, za datum " + noviDatum + ", želite izbrisati?</legend>"
+
+                for (var i = 0; i < splitDogodki.length - 1; ++i) {
+                    html += `<input type="checkbox" name="dogodek_izbran_datum" value="${splitDogodki[i].split(",")[0]}">${splitDogodki[i].split(",")[1]}<br>`
+                }
+
+                html += `
+                        <br>      
+                        <input class="btn btn-danger" type="submit" value="Briši dogodke" onClick="brisiDogodke()" />      
+                    </fieldset>
+                `
+
+                document.getElementById('dogodkiZaIzbris').innerHTML = html
+                
+            },
+            error: function() {
+                alert("Žal ste vnesli napačno geslo")
+                vProcesuShranjevanja = false
+            }
+        });
+
+    } else {
+        vProcesuShranjevanja = false
+        var whatIsObligatory = ""
+        if (!datum.isValid() || datumDogodka.length < 8 || datumDogodka.length > 10 || datumDogodka.split("-").length != 3 || datumDogodka.split("-")[0].length == 0 || datumDogodka.split("-")[1].length == 0 || datumDogodka.split("-")[2].length == 0) {
+            whatIsObligatory += "Vnesli ste napačen datum. "
+        }
+        if (password == "") {
+            whatIsObligatory += "Prosimo vnesite geslo. "
+        }
+        alert(whatIsObligatory)
+    }
+}
+
+var srediShranjevanja = false
+function brisiDogodke() {
+    if (srediShranjevanja) {
+        return
+    }
+    srediShranjevanja = true
+    const dogodki = document.getElementsByName("dogodek_izbran_datum"); 
+    
+    idsDogodkov = []
+
+    for (var i = 0; i < dogodki.length; ++i) {
+        if (dogodki[i].checked) {
+            //console.log(dogodki[i].value)
+            idsDogodkov.push(dogodki[i].value)
+        }
+    }
+
+    if (idsDogodkov.length > 0) {
+        const password = document.querySelector('#pass').value
+
+        if (password != "") {
+            $.ajax({
+                url: '/koledar/brisi',
+                type: 'DELETE',
+                data: {
+                    ids_dogodkov: idsDogodkov,
+                    password: password
+                },
+                success: function () {
+                    srediShranjevanja = false
+                    window.location.href = '/koledar';
+                    alert("Dogodeki so bili uspešno izbrisani")
+                },
+                error: function () {
+                    srediShranjevanja = false
+                    alert("Žal ste vnesli napačno geslo")
+                }
+            });
+        } else {
+            vProcesuShranjevanja = false
+            var whatIsObligatory = ""
+            if (password == "") {
+                whatIsObligatory += "Prosimo vnesite geslo. "
+            }
+            alert(whatIsObligatory)
+        }
+    } else {
+        srediShranjevanja = false
+    }
+}
 
 var spremeniKoledar = function() {
-
-    //mm = 10;
-    //yyyy = 2019;
-
-    //console.log("funkcija se izvede");
-    //pobrisiPrikazDogodkov();
 
     nastaviMesec(mm);
 
@@ -616,6 +765,9 @@ var spremeniMesecNazaj = function() {
 
 //datum oblike "dd-mm-yyyy"
 var dodajDogodekVDomu = function(datum, dogodek) {
+    console.log("dodaj dogodek")
+    console.log(datum)
+    console.log(dogodek)
     var doZdejDogodki = dogodkiVDomu.get(datum, dogodek);
     var dodaj = '<p style="font-size:1.2vw;" class="koledar_dogodki uk-text-left uk-margin-large-left">- ' + dogodek + '</p>';
     if (doZdejDogodki != null)

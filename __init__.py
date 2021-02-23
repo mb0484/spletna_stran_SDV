@@ -1,10 +1,10 @@
 import sqlite3
 import bcrypt
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
 from werkzeug import exceptions
 
 def get_db_connection():
-    conn = sqlite3.connect('/var/www/spletna_stran_SDV/spletna_stran_SDV/database.db') #/var/www/spletna_stran_SDV/spletna_stran_SDV/
+    conn = sqlite3.connect('database.db') #/var/www/spletna_stran_SDV/spletna_stran_SDV/
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -20,10 +20,11 @@ def get_post(post_id):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
 
-salt = bcrypt.gensalt()
+#salt = bcrypt.gensalt()
 hashed_pass_for_objavi = b'$2b$12$VXXd1rQe7iSFjUjhekn4r.ZHx0QOvTcJhnapgTpeT5DZCQ6nGHTFK'
 hashed_pass_for_edit = b'$2b$12$I3uVKhGPMc4fwsFMvGwFF.5Zn.sS2skgDXJ8CTG7GA1TkUemiRF9y'
 hashed_pass_for_delete = b'$2b$12$LmoDxi1PxmQYGZDGDXlCgu7SQb72UFnAgaskoIG2eXCzElpRnIsby'
+hashed_pass_for_koledar = b'$2b$12$r3Fn41760eMMeTyQBwG/9OooNjJ559KQO5yKOdXOgunHpC0OOYOF.'
 
 @app.route('/')
 def index():
@@ -162,7 +163,81 @@ def delete_novica(novica_id):
 
 @app.route('/koledar')
 def koledar():
-    return render_template('koledar.html')
+    conn = get_db_connection()
+    dogodki = conn.execute('SELECT * FROM dogodkiVKoledarju').fetchall()
+    conn.close()
+    return render_template('koledar.html', dogodki=dogodki)
+
+@app.route('/koledar/dodaj', methods=('GET', 'POST'))
+def koledar_dodaj():
+
+    if request.method == 'POST':
+        password = request.form.get("password")
+
+        if bcrypt.checkpw(b'' + password.encode('utf-8'), hashed_pass_for_koledar):
+            datum = request.form.get("datum")
+            opis = request.form.get("opis")
+
+            conn = get_db_connection()
+            conn.execute('INSERT INTO dogodkiVKoledarju (dogodekDatum, dogodekOpis) VALUES (?, ?)',
+                        (datum, opis))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
+        else:
+            return exceptions.abort(401)
+    else:
+        return render_template('createDogodek.html')
+
+@app.route('/koledar/brisi', methods=('GET', 'POST', 'DELETE'))
+def koledar_brisi():
+    if request.method == 'POST':
+        password = request.form.get("password")
+
+        if bcrypt.checkpw(b'' + password.encode('utf-8'), hashed_pass_for_koledar):
+            datum = request.form.get("datum")
+
+            if (datum): 
+
+                conn = get_db_connection()
+                dogodki = conn.execute('SELECT * FROM dogodkiVKoledarju WHERE dogodekDatum = ?',
+                            (datum,)).fetchall()
+                conn.close()
+
+                constructedAnsver = ""
+
+                for dogodek in dogodki:
+                    constructedAnsver += str(dogodek['id']) + "," + dogodek['dogodekOpis'] + ";"
+
+                return constructedAnsver
+            return exceptions.abort(404)
+        else:
+            return exceptions.abort(401)
+    elif request.method == 'DELETE':
+        password = request.form.get("password")
+
+        if bcrypt.checkpw(b'' + password.encode('utf-8'), hashed_pass_for_koledar):
+            ids_dogodkov = request.form.getlist("ids_dogodkov[]")
+
+            conn = get_db_connection()
+
+            for id_dogodka in ids_dogodkov:
+                if len(id_dogodka) > 0:
+                    conn.execute('DELETE FROM dogodkiVKoledarju WHERE id = ?', (id_dogodka,))
+            
+            conn.commit()
+            conn.close()
+
+            resp = jsonify(success=True)
+            resp.status_code = 204
+
+            return resp
+        else:
+            return exceptions.abort(401)
+    
+    else:
+        return render_template('deleteDogodek.html')
+
 
 @app.route('/skupine')
 def skupine():

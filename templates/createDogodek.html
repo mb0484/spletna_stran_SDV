@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="uk-container">
+    <h1 class="objaviClanekNaslov">{% block title %} Dodaj Nov Dogodek v koledar {% endblock %}</h1>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="opisDogodka">Opis dogodka</label>
+            <input id="opisDogodka" type="text" name="opisDogodka"
+                placeholder="opisDogodka" class="form-control"></input>
+        </div>
+
+        <div class="form-group">
+            <label for="datumDogodka">Datum dogodka</label>
+            <input id="datumDogodka" type="date" placeholder="yyyy-mm-dd"></input>
+        </div>
+
+        <div>
+            <label for="pass">Vpišite geslo za urejanje koledarja</label>
+            <input type="password" id="pass" name="password"
+                   minlength="8" required>
+        </div>
+
+    </form>
+
+
+    <button style="margin-bottom: 30px;" onclick="shraniNovDogodekVKoledar()" class="btn btn-primary objaviBtn">Objavi dogodek</button>
+
+
+</div>
+
+{% endblock %}

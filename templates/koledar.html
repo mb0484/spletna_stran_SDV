@@ -133,6 +133,14 @@
 
     <script type = "text/javascript">
         makeNavigationLinkActive('koledar_page')
+        pobrisiDogodkeVDomu()
     </script>
+
+    {% for dogodek in dogodki %}
+    <script type = "text/javascript">
+        dodajDogodekVDomu("{{ dogodek['dogodekDatum'] }}", "{{ dogodek['dogodekOpis'] }}")
+        izdelajKoledar()
+    </script>
+    {% endfor %}
 
 {% endblock %}

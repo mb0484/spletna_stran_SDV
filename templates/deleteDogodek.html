@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="uk-container">
+    <h1 class="objaviClanekNaslov">{% block title %} Briši dogodke iz koledarja {% endblock %}</h1>
+
+    <form method="post">
+
+        <div class="form-group">
+            <label for="datumDogodka">Datum dogodkov za brisanje</label>
+            <input id="datumDogodka" type="date" placeholder="yyyy-mm-dd"></input>
+        </div>
+
+        <div>
+            <label for="pass">Vpišite geslo za urejanje koledarja</label>
+            <input type="password" id="pass" name="password"
+                   minlength="8" required>
+        </div>
+
+    </form>
+
+
+    <button style="margin-bottom: 30px;" onclick="poizvediZaDogodke()" class="btn btn-primary">Prikazi dogodke</button>
+   
+    <div id="dogodkiZaIzbris" style="margin-top:25px;">
+    </div>
+
+</div>
+
+{% endblock %}
