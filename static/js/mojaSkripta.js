@@ -1062,6 +1062,11 @@ function uploadClanek(indexIfEdit) {
     }
 }
 
+function addArticleContentForEdit(contentClanekEdit) {
+    let re = /&lt;br&gt;/gi;
+    document.querySelector('#vsebina').value = contentClanekEdit.replace(re, '\n')
+}
+
 function uploadAnotherImage() {
     var index = (stSlik + 1) + ''
 
