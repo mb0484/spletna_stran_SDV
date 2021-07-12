@@ -955,8 +955,15 @@ function uploadClanek(indexIfEdit) {
             readerMainImage.onloadend = function() {
                 var base64dataMainImage = readerMainImage.result.split(',')[1];
                 
-                if (base64dataMainImage.length > 500000) {
-                    alert("Velikost ene od slik je prevelika")
+                var noImageTooBig = base64dataMainImage.length < 500000
+                for (var i = 0; i < othrBase64dataImages.length; ++i) {
+                    if (othrBase64dataImages[i].length > 500000) {
+                        noImageTooBig = false
+                    }
+                }
+
+                if (!noImageTooBig) {
+                    alert("Velikost ene od slik je prevelika. ")
                     vProcesuShranjevanja = false
                 }
                 else {
