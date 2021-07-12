@@ -1191,7 +1191,7 @@ function addBase64ImageNaslovnica(base64Image, pripisKSliki, indexSlike, stAllIm
                     <!--<img src="${blobUrl}" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">-->
                     <!--<canvas width="600" height="400"></canvas>-->
                     <div class="container">
-                        <img src="${blobUrl}" alt="Nature" style="width:100%;" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">
+                        <img src="${blobUrl}" alt="Nature" style="max-height: 320px;" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">
                         ${dodatekHtml}
                     </div>
                 </div>
@@ -1199,7 +1199,7 @@ function addBase64ImageNaslovnica(base64Image, pripisKSliki, indexSlike, stAllIm
 
     html2 = `<div class="mySlides1">
                 <div class="numbertext">${(parseInt(indexSlike) + 1)} / ${stAllImages}</div>
-                <img src="${blobUrl}" style="width:100%">
+                <img src="${blobUrl}" style="width: 100%;">
 
                 ${dodatekHtml2}
             </div>`
