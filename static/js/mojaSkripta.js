@@ -948,7 +948,7 @@ function uploadClanek(indexIfEdit) {
     othrBase64dataImages = []
     othrBase64DataImagesPripisi = []
 
-    if (imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
+    if (mainImg.width < 1800 && imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
         convertImagesToBase64(0, function() {
             var readerMainImage = new FileReader();
             readerMainImage.readAsDataURL(imageBlob); 
