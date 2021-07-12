@@ -2296,7 +2296,7 @@ select.uk-form-width-xsmall {
 @media (min-width: 1200px) {
   /* Horizontal */
   .uk-grid {
-    margin-left: -40px;
+    margin-left: -10px;
   }
   .uk-grid > * {
     padding-left: 40px;

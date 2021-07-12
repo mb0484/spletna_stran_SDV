@@ -31,7 +31,7 @@ def index():
     conn = get_db_connection()
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT id, title, subtitle, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 
@@ -50,24 +50,13 @@ def index():
 @app.route('/novice')
 def novice():
     conn = get_db_connection()
-    clanek = conn.execute('SELECT * FROM clanek ORDER BY created DESC').fetchone()
 
-    clanek_ostale_slike = conn.execute('SELECT * FROM slika_k_clanku WHERE clanek_id = ?',
-                        (clanek['id'],)).fetchall()
-
-    zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
-
-    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
-
-    stZadnjihSlikZaPrikaz = 6
-
-    if (len(zadnje_slike) > stZadnjihSlikZaPrikaz):
-        zadnje_slike = zadnje_slike[0:stZadnjihSlikZaPrikaz]
+    zadnji_clanki = conn.execute('SELECT id, title, subtitle, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
 
     conn.close()
-    if clanek is None:
+    if zadnji_clanki is None:
         return exceptions.abort(404)
-    return render_template('novice.html', clanek=clanek, clanek_ostale_slike=clanek_ostale_slike, zadnje_slike=zadnje_slike, zadnji_clanki=zadnji_clanki)
+    return render_template('novice.html', zadnji_clanki=zadnji_clanki)
 
 @app.route('/<int:novica_id>')
 def get_novica(novica_id):
@@ -79,7 +68,7 @@ def get_novica(novica_id):
 
     zadnje_slike = conn.execute('SELECT * FROM slika_k_clanku ORDER BY created DESC').fetchall()
 
-    zadnji_clanki = conn.execute('SELECT id, short_content, image1Smaller FROM clanek ORDER BY created DESC').fetchall()
+    zadnji_clanki = conn.execute('SELECT id, title, subtitle, image1Smaller, created FROM clanek ORDER BY created DESC').fetchall()
 
     stZadnjihSlikZaPrikaz = 6
 
@@ -89,7 +78,7 @@ def get_novica(novica_id):
     conn.close()
     if clanek is None:
         return exceptions.abort(404)
-    return render_template('novice.html', clanek=clanek, clanek_ostale_slike=clanek_ostale_slike, zadnje_slike=zadnje_slike, zadnji_clanki=zadnji_clanki)
+    return render_template('novica.html', clanek=clanek, clanek_ostale_slike=clanek_ostale_slike, zadnje_slike=zadnje_slike, zadnji_clanki=zadnji_clanki)
 
 @app.route('/<int:novica_id>/edit', methods=('GET', 'POST'))
 def edit_novica(novica_id):
@@ -110,6 +99,7 @@ def edit_novica(novica_id):
         image1 = request.form.get("image1")
         image1Smaller = request.form.get("image1Smaller")
         othr_images = request.form.getlist('othr_images[]')
+        othr_images_pripisi = request.form.getlist('othr_images_pripisi[]')
         password = request.form.get("password")
 
         if bcrypt.checkpw(b'' + password.encode('utf-8'), hashed_pass_for_edit):
@@ -136,8 +126,8 @@ def edit_novica(novica_id):
                     conn.execute('DELETE FROM slika_k_clanku WHERE clanek_id = ?', (novica_id,))
 
                     if (othr_images):
-                        for image in othr_images:
-                            conn.execute('INSERT INTO slika_k_clanku (clanek_id, image_blob) VALUES (?, ?)', (novica_id, image))
+                        for i in range(0, len(othr_images)):
+                            conn.execute('INSERT INTO slika_k_clanku (clanek_id, image_blob, pripis) VALUES (?, ?, ?)', (novica_id, othr_images[i], othr_images_pripisi[i]))
 
                 conn.commit()
                 conn.close()
@@ -253,6 +243,7 @@ def create():
         image1 = request.form.get("image1")
         image1Smaller = request.form.get("image1Smaller")
         othr_images = request.form.getlist('othr_images[]')
+        othr_images_pripisi = request.form.getlist('othr_images_pripisi[]')
         password = request.form.get("password")
 
         if bcrypt.checkpw(b'' + password.encode('utf-8'), hashed_pass_for_objavi):
@@ -275,8 +266,8 @@ def create():
                 print("clanek id je", clanek_id)
 
                 if (othr_images):
-                    for image in othr_images:
-                        cursor.execute('INSERT INTO slika_k_clanku (clanek_id, image_blob) VALUES (?, ?)', (clanek_id, image))
+                    for i in range(0, len(othr_images)):
+                        cursor.execute('INSERT INTO slika_k_clanku (clanek_id, image_blob, pripis) VALUES (?, ?, ?)', (clanek_id, othr_images[i], othr_images_pripisi[i]))
 
                 conn.commit()
                 conn.close()

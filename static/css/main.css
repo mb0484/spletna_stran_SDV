@@ -9,7 +9,11 @@ body {
     width: 100%;
     display: table;
     font-weight: 100;
-    font-family: "Lato";
+    font-family: sans-serif;
+}
+
+.uk-card-body {
+    padding: 20px 10px !important;
 }
 
 .container {
@@ -59,6 +63,13 @@ body {
     height: 100px;
 } */
 
+@media (min-width: 1200px) {
+    /* Horizontal */
+    .uk-grid {
+      margin-left: -10px !important;
+    }
+}
+
 @media (min-width: 500px) {
     .div_for_clanki_slika {
         height: 140px;
@@ -80,7 +91,8 @@ body {
     font-weight: 300;
     margin-top: 20px;
     margin-left: 20px;
-    /* font-family: 'Courgette', cursive; */
+    font-family: sans-serif;
+
 }
 
 .objaviClanekNaslov {
@@ -105,7 +117,31 @@ body {
 .clanek_text {
     text-align: justify;
     font-size: 120%;
-    /* font-family: 'Courgette', cursive; */
+    /*font-weight: 400;*/
+    font-family: sans-serif;
+}
+
+.clanek_naslov_text {
+    text-align: justify;
+    font-size: 140% !important;
+    font-weight: 500;
+    font-family: sans-serif;
+    margin: 0 0 0 0 !important;
+}
+
+.container {
+    position: relative;
+    font-family: Arial;
+}
+
+.text-block {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .naslov_text {

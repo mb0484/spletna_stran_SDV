@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="uk-container">
+        <div class="uk-container uk-container-expand uk-margin-remove-top">
+
+            <div class="uk-grid">
+                <div id="glavna_novica" class="uk-width-3-4">
+                    <div class="uk-container uk-container uk-container-center uk-background-blend-lighten uk-margin-medium-top uk-margin-medium-bottom uk-text-center">
+
+
+                        <article class="uk-article">
+
+                            <h1 class="uk-article-title naslov_text"><a class="uk-link-reset" href="">{{ clanek['title'] }}</a></h1>
+
+                            <p class="uk-article-meta"><a href="#"></a><a href="#"></a></p>
+
+                            <p class="uk-text-lead pod_naslov_text">{{ clanek['subtitle'] }}</p>
+
+                            <div class="container">
+                                <img id="naslovnaSlika"/>
+                                
+                                <div class="text-block">
+                                    <p id="novicaDate" style="margin-top: 5px; margin-bottom: 5px; font-family: sans-serif"></p>
+                                </div>
+                            </div>
+
+                            <p id="novice_text" style="font-size:1.5vw;" class="besedilo_stran clanek_text">
+                            </p>
+
+                        </article>
+
+                        <div id="articleImages" class="row">
+                        </div>
+                        
+                        <div id="myModal1" class="modal">
+                            <span class="close cursor" onclick="closeModal('1')">&times;</span>
+                            <div id="modelLightboxImages" class="modal-content">
+
+                                <a class="prev" onclick="plusSlides(-1, '1')">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1, '1')">&#10095;</a>
+                            
+                                <div class="caption-container">
+                                    <p id="caption1"></p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="myModal2" class="modal">
+                            <span class="close cursor" onclick="closeModal('2')">&times;</span>
+                            <div id="modelLightboxLastImages" class="modal-content">
+                                <a class="prev" onclick="plusSlides(-1, '2')">&#10094;</a>
+                                <a class="next" onclick="plusSlides(1, '2')">&#10095;</a>
+                            
+                                <div class="caption-container">
+                                    <p id="caption2"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="zadnje_slike" class="uk-width-1-4 uk-margin-xlarge-top uk-margin-medium-bottom uk-margin-remove-right">
+                    <div class="uk-container uk-overlay-primary uk-text-center">
+                        <h3 class="naslov_slike uk-margin-medium-top"><a class="uk-link-reset clanek_text" href="">zadnje slike</a></h3>
+
+                        <div id="lastImages" class="uk-grid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="zadnjiClanki"  class="row" uk-grid>
+    </div>
+
+    <script type = "text/javascript">
+        makeNavigationLinkActive('novice_page')
+    </script>
+
+    <script type = "text/javascript">
+        readBase64("{{ clanek['image1'] }}")
+    </script>
+
+    <script type = "text/javascript">
+        addArticleContentAndDate("{{ clanek['content'] }}", "{{ clanek['created'] }}")
+    </script>
+
+    {% for clanek_slika in clanek_ostale_slike %}
+        <script type = "text/javascript">
+            addBase64Image("{{ clanek_slika['image_blob'] }}", "{{loop.index0}}", "1", "{{clanek_ostale_slike|count}}", "{{ clanek_slika['pripis'] }}")
+        </script>
+    {% endfor %}
+
+    {% for zadnja_slika in zadnje_slike %}
+        <script type = "text/javascript">
+            addBase64Image("{{ zadnja_slika['image_blob'] }}", "{{loop.index0}}", "2", "{{zadnje_slike|count}}", "{{ zadnja_slika['pripis'] }}")
+        </script>
+    {% endfor %}
+
+    {% for zadnji_clanek in zadnji_clanki %}
+        <script type = "text/javascript">
+            addZadnjiClanek("{{ zadnji_clanek['image1smaller'] }}", "{{ zadnji_clanek['subtitle'] }}", "{{ zadnji_clanek['id'] }}", "{{ zadnji_clanek['title'] }}")
+        </script>
+    {% endfor %}
+
+{% endblock %}

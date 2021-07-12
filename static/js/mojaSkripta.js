@@ -872,14 +872,19 @@ function convertImageToBlob(url_to_image, index) {
 }
 
 var othrBase64dataImages = []
+var othrBase64DataImagesPripisi = []
+var zacetniPripisiImages = []
 
 function convertImagesToBase64(curBlobImageIndex, callBack) {
+    const curPripis = document.getElementById('pripis' + (curBlobImageIndex + 1) + "Slika").value
+
     let blob = otherImageBlobs[curBlobImageIndex]
     var reader = new FileReader();
     reader.readAsDataURL(blob); 
     reader.onloadend = function() {
         var base64data = reader.result.split(',')[1];
         othrBase64dataImages.push(base64data)
+        othrBase64DataImagesPripisi.push(curPripis)
 
         if (othrBase64dataImages.length == otherImageBlobs.length) {
             callBack()
@@ -925,14 +930,14 @@ function resizeBase64Img(base64, width, height) {
 }
 
 function uploadClanek(indexIfEdit) {
-    console.log("uppload clanek")
     if (vProcesuShranjevanja) {
         return
     }
     vProcesuShranjevanja = true
     const title = document.querySelector('#title').value
     const subtitle = document.querySelector('#subtitle').value
-    const vsebina = document.querySelector('#vsebina').value
+    let re = /\n/gi;
+    const vsebina = document.querySelector('#vsebina').value.replace(re, '<br>')
     const povzetek = document.querySelector('#povzetek').value
     const password = document.querySelector('#pass').value
     const mainImg = document.querySelector('#image1ForUpload')
@@ -941,6 +946,7 @@ function uploadClanek(indexIfEdit) {
     const faktorZmanjsevanja = mainImg.width / maxWidth
     
     othrBase64dataImages = []
+    othrBase64DataImagesPripisi = []
 
     if (imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
         convertImagesToBase64(0, function() {
@@ -963,6 +969,7 @@ function uploadClanek(indexIfEdit) {
                                 image1: base64dataMainImage,
                                 image1Smaller: resizedImageBase64,
                                 othr_images: othrBase64dataImages,
+                                othr_images_pripisi: othrBase64DataImagesPripisi,
                                 password: password
                             },
                             success: function () {
@@ -976,11 +983,18 @@ function uploadClanek(indexIfEdit) {
                             }
                         });
                     } else {
+                        for (var i = 0; i < othrBase64DataImagesPripisi.length; ++i) {
+                            if (i >= zacetniPripisiImages.length || othrBase64DataImagesPripisi[i] != zacetniPripisiImages[i]) {
+                                spremenilKaksnoSliko = true
+                                break
+                            }
+                        }
+                        console.log(spremenilKaksnoSliko)
+
                         var changedImages = 'false'
                         if (spremenilKaksnoSliko) {
                             changedImages = 'true'
                         }
-
                         $.ajax({
                             url: '/' + indexIfEdit + '/edit?changed_images=' + changedImages,
                             type: 'POST',
@@ -992,6 +1006,7 @@ function uploadClanek(indexIfEdit) {
                                 image1: base64dataMainImage,
                                 image1Smaller: resizedImageBase64,
                                 othr_images: othrBase64dataImages,
+                                othr_images_pripisi: othrBase64DataImagesPripisi,
                                 password: password
                             },
                             success: function () {
@@ -1041,7 +1056,14 @@ function uploadAnotherImage() {
     var html = `<label for="content">Dodatna slika</label>
                 <input id="image${index}Input" type='file' name="image"></input>
 
-                <br><img id="image${index}ForUpload" src="#" style="width:30%"/>`
+                <br><img id="image${index}ForUpload" src="#" style="width:30%"/>
+                
+                <div class="form-group">
+                    <label for="pripisSlika">Kratek Pripis k sliki</label>
+                    <input maxlength="100" id="pripis${index}Slika" type="text" name="pripisSlika"
+                        placeholder="pripis k sliki" class="form-control"
+                        value=""></input> <!--{{ request.form['pripisSlika'] }}-->
+                </div>`
 
     document.getElementById('slike' + index + 'Inputs').innerHTML = html
 
@@ -1079,6 +1101,17 @@ function readBase64(base64Image) {
 
 }
 
+function addArticleContentAndDate(content, articleDate) {
+    articleDate = articleDate.replace(/-/gi, ".")
+    document.querySelector("#novicaDate").innerHTML = "Objavljeno: " + articleDate
+
+    split_conent = content.split("&lt;br&gt;")
+
+    for (var i = 0; i < split_conent.length; ++i) {
+        document.querySelector("#novice_text").innerHTML += "<br>" + split_conent[i]
+    }
+}
+
 function makeNavigationLinkActive(whichLink) {
     if (document.getElementById(whichLink + '1')) {
         document.getElementById(whichLink + '1').classList.add('uk-active')
@@ -1104,7 +1137,7 @@ function makeNavigationLinkActive(whichLink) {
 
 }
 
-function addZadnjiClanek(base64Image, povzetek, clanekId) {
+function addZadnjiClanek(base64Image, povzetek, clanekId, clanekTitle) {
     const contentType = 'image/png';
     
     const blob = b64toBlob(base64Image, contentType);
@@ -1112,12 +1145,18 @@ function addZadnjiClanek(base64Image, povzetek, clanekId) {
 
     html = `<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
                 <div class="uk-card uk-card-hover uk-card-body text-center">
-                    <div class="div_for_clanki_slika">
+                    <div style="min-height:80px">
+                        <h1 style="font-size:1vw;" class="novice_stran uk-text-medium text-center clanek_naslov_text">
+                            ${clanekTitle}
+                        </h1>
+                    </div>
+
+                    <div style="height:130px" class="div_for_clanki_slika">
                         <img class="fit" src="${blobUrl}" alt="">
                     </div>
                     
-                    <div style="height:130px">
-                        <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
+                    <div style="min-height:80px; margin-top: 10px;">
+                        <p style="font-size:1vw;" class="novice_stran uk-text-small text-center clanek_text">
                             ${povzetek}
                         </p>
                     </div>
@@ -1129,22 +1168,40 @@ function addZadnjiClanek(base64Image, povzetek, clanekId) {
     document.getElementById('zadnjiClanki').innerHTML += html
 }
 
-function addBase64ImageNaslovnica(base64Image, indexSlike, stAllImages) {
+function addBase64ImageNaslovnica(base64Image, pripisKSliki, indexSlike, stAllImages) {
     const contentType = 'image/png';
     
     const blob = b64toBlob(base64Image, contentType);
     const blobUrl = window.URL.createObjectURL(blob);
 
+    dodatekHtml = ""
+    dodatekHtml2 = ""
+    if (pripisKSliki && pripisKSliki != "" && pripisKSliki != "None") {
+        dodatekHtml = `<div class="text-block">
+                            <p style="margin-top: 10px; font-family: sans-serif">${pripisKSliki}</p>
+                        </div>`
+
+        dodatekHtml2 = `<div class="caption-container">
+                            <p id="caption1">${pripisKSliki}</p>
+                        </div>`
+    }
+
     html = `<div class="col-12 col-lg-4 col-md-6 col-sm-12 col-xs-12 column imagesForLightbox">
                 <div class="uk-inline uk-margin-small-left uk-margin-medium-bottom text-center">
-                    <img src="${blobUrl}" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">
+                    <!--<img src="${blobUrl}" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">-->
                     <!--<canvas width="600" height="400"></canvas>-->
+                    <div class="container">
+                        <img src="${blobUrl}" alt="Nature" style="width:100%;" onclick="openModal('1');currentSlide(${(parseInt(indexSlike) + 1)}, '1')" class="hover-shadow">
+                        ${dodatekHtml}
+                    </div>
                 </div>
             </div>`
 
     html2 = `<div class="mySlides1">
                 <div class="numbertext">${(parseInt(indexSlike) + 1)} / ${stAllImages}</div>
                 <img src="${blobUrl}" style="width:100%">
+
+                ${dodatekHtml2}
             </div>`
 
     
@@ -1152,7 +1209,7 @@ function addBase64ImageNaslovnica(base64Image, indexSlike, stAllImages) {
     document.getElementById('modelLightboxImages').innerHTML += html2
 }
 
-function addBase64ImageForEdit(base64Image, indexSlike, stAllImages) {
+function addBase64ImageForEdit(base64Image, indexSlike, stAllImages, pripisSlika) {
     const contentType = 'image/png';
     
     const blob = b64toBlob(base64Image, contentType);
@@ -1167,18 +1224,34 @@ function addBase64ImageForEdit(base64Image, indexSlike, stAllImages) {
     var html = `<label for="content">Dodatna slika</label>
                 <input id="image${index}Input" type='file' name="image"></input>
 
-                <br><img id="image${index}ForUpload" src="${blobUrl}" style="width:30%"/>`
+                <br><img id="image${index}ForUpload" src="${blobUrl}" style="width:30%"/>
+                
+                <div class="form-group">
+                    <label for="pripisSlika">Kratek Pripis k sliki</label>
+                    <input maxlength="100" id="pripis${index}Slika" type="text" name="pripisSlika"
+                        placeholder="pripis k sliki" class="form-control pripisiSlikeClass"
+                        value="${pripisSlika}"></input> <!--{{ request.form['pripisSlika'] }}-->
+                </div>`
+
+    zacetniPripisiImages.push(pripisSlika)
 
     document.getElementById('slike' + index + 'Inputs').innerHTML += html
 
     addEventListnerForImages();
 }
 
-function addBase64Image(base64Image, index, whichModal, stAllImages) {
+function addBase64Image(base64Image, index, whichModal, stAllImages, pripisKSliki) {
     const contentType = 'image/png';
     
     const blob = b64toBlob(base64Image, contentType);
     const blobUrl = window.URL.createObjectURL(blob);
+
+    dodatekHtml = ""
+    if (pripisKSliki && pripisKSliki != "" && pripisKSliki != "None") {
+        dodatekHtml = `<div class="caption-container">
+                            <p id="caption1">${pripisKSliki}</p>
+                        </div>`
+    }
 
     if (whichModal == '1') {
         html = `<div class="column imagesForLightbox">
@@ -1194,6 +1267,8 @@ function addBase64Image(base64Image, index, whichModal, stAllImages) {
     html2 = `<div class="mySlides${whichModal}">
                 <div class="numbertext">${(parseInt(index) + 1)} / ${stAllImages}</div>
                 <img src="${blobUrl}" style="width:100%">
+
+                ${dodatekHtml}
             </div>`
 
     

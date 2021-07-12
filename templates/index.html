@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="uk-position-bottom-right uk-position-small uk-text-center uk-light">
-                    <h2 style="font-size:2.5vw;" class="quote">'Kindness is free sprinkie that stuff everywhere'</h2>
+                    <h2 style="font-size:2.5vw;" class="quote">'Ni ljubezni, ki je ne bi spremljala pravičnost.'</h2>
                 </div>
             </li>
         </ul>
@@ -39,17 +39,6 @@
 
 
     <div id="zadnjiClanki" class="row" uk-grid>
-        <!--<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-            <div class="uk-card uk-card-hover uk-card-body text-center">
-                <img class="fit" src="static/slike/novica1.jpg" alt="">
-
-                <p style="font-size:1vw;" class="novice_stran uk-text-small clanek_text">
-                    Na podstrehi doma so po zamisli ene od študentk, Andjelke, uredili molilnico. Sploh so predlogi stanovalcev dobrodošli in tako so lani na pobudo enega od njih...
-                </p>
-
-                <button class="uk-button uk-button-danger uk-button-small"><p class="clanek_text uk-margin-remove">Preberi več</p></button>
-            </div>
-        </div>-->
     </div>
 
     <!--<p>Right arrow: <i class="arrow right"></i></p>-->
@@ -87,13 +76,13 @@
 
     {% for zadnji_clanek in zadnji_clanki %}
     <script type = "text/javascript">
-        addZadnjiClanek("{{ zadnji_clanek['image1smaller'] }}", "{{ zadnji_clanek['short_content'] }}", "{{ zadnji_clanek['id'] }}")
+        addZadnjiClanek("{{ zadnji_clanek['image1smaller'] }}", "{{ zadnji_clanek['subtitle'] }}", "{{ zadnji_clanek['id'] }}", "{{ zadnji_clanek['title'] }}")
     </script>
     {% endfor %}
 
     {% for zadnja_slika in zadnje_slike %}
     <script type = "text/javascript">
-        addBase64ImageNaslovnica("{{ zadnja_slika['image_blob'] }}", "{{loop.index0}}", "{{zadnje_slike|count}}")
+        addBase64ImageNaslovnica("{{ zadnja_slika['image_blob'] }}", "{{ zadnja_slika['pripis'] }}", "{{loop.index0}}", "{{zadnje_slike|count}}")
     </script>
     {% endfor %}
 
