@@ -948,79 +948,86 @@ function uploadClanek(indexIfEdit) {
     othrBase64dataImages = []
     othrBase64DataImagesPripisi = []
 
-    if (mainImg.width < 1800 && imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
+    if (imageBlob != null && title != "" && subtitle != "" && vsebina != "" && povzetek != "" && password != "") {
         convertImagesToBase64(0, function() {
             var readerMainImage = new FileReader();
             readerMainImage.readAsDataURL(imageBlob); 
             readerMainImage.onloadend = function() {
                 var base64dataMainImage = readerMainImage.result.split(',')[1];
-                resizeBase64Img(base64dataMainImage, mainImg.width / faktorZmanjsevanja, mainImg.height / faktorZmanjsevanja).then(resizedBase64dataMainImage=>{
-                    const resizedImageBase64 = resizedBase64dataMainImage[0].src.substr(22)
+                
+                if (base64dataMainImage.length > 500000) {
+                    alert("Velikost ene od slik je prevelika")
+                    vProcesuShranjevanja = false
+                }
+                else {
+                    resizeBase64Img(base64dataMainImage, mainImg.width / faktorZmanjsevanja, mainImg.height / faktorZmanjsevanja).then(resizedBase64dataMainImage=>{
+                        const resizedImageBase64 = resizedBase64dataMainImage[0].src.substr(22)
+                        
+                        if (indexIfEdit == '-1') {
+                            $.ajax({
+                                url: 'create',
+                                type: 'POST',
+                                data: {
+                                    title: title,
+                                    subtitle: subtitle,
+                                    vsebina: vsebina,
+                                    povzetek: povzetek,
+                                    image1: base64dataMainImage,
+                                    image1Smaller: resizedImageBase64,
+                                    othr_images: othrBase64dataImages,
+                                    othr_images_pripisi: othrBase64DataImagesPripisi,
+                                    password: password
+                                },
+                                success: function () {
+                                    window.location.href = '/';
+                                    alert("Članek je bil uspešno objavljen")
+                                    vProcesuShranjevanja = false
+                                },
+                                error: function() {
+                                    alert("Žal ste vnesli napačno geslo")
+                                    vProcesuShranjevanja = false
+                                }
+                            });
+                        } else {
+                            for (var i = 0; i < othrBase64DataImagesPripisi.length; ++i) {
+                                if (i >= zacetniPripisiImages.length || othrBase64DataImagesPripisi[i] != zacetniPripisiImages[i]) {
+                                    spremenilKaksnoSliko = true
+                                    break
+                                }
+                            }
+                            console.log(spremenilKaksnoSliko)
 
-                    if (indexIfEdit == '-1') {
-                        $.ajax({
-                            url: 'create',
-                            type: 'POST',
-                            data: {
-                                title: title,
-                                subtitle: subtitle,
-                                vsebina: vsebina,
-                                povzetek: povzetek,
-                                image1: base64dataMainImage,
-                                image1Smaller: resizedImageBase64,
-                                othr_images: othrBase64dataImages,
-                                othr_images_pripisi: othrBase64DataImagesPripisi,
-                                password: password
-                            },
-                            success: function () {
-                                window.location.href = '/';
-                                alert("Članek je bil uspešno objavljen")
-                                vProcesuShranjevanja = false
-                            },
-                            error: function() {
-                                alert("Žal ste vnesli napačno geslo")
-                                vProcesuShranjevanja = false
+                            var changedImages = 'false'
+                            if (spremenilKaksnoSliko) {
+                                changedImages = 'true'
                             }
-                        });
-                    } else {
-                        for (var i = 0; i < othrBase64DataImagesPripisi.length; ++i) {
-                            if (i >= zacetniPripisiImages.length || othrBase64DataImagesPripisi[i] != zacetniPripisiImages[i]) {
-                                spremenilKaksnoSliko = true
-                                break
-                            }
+                            $.ajax({
+                                url: '/' + indexIfEdit + '/edit?changed_images=' + changedImages,
+                                type: 'POST',
+                                data: {
+                                    title: title,
+                                    subtitle: subtitle,
+                                    vsebina: vsebina,
+                                    povzetek: povzetek,
+                                    image1: base64dataMainImage,
+                                    image1Smaller: resizedImageBase64,
+                                    othr_images: othrBase64dataImages,
+                                    othr_images_pripisi: othrBase64DataImagesPripisi,
+                                    password: password
+                                },
+                                success: function () {
+                                    window.location.href = '/' + indexIfEdit;
+                                    alert("Članek je bil uspešno posodobljen")
+                                    vProcesuShranjevanja = false
+                                },
+                                error: function() {
+                                    alert("Žal ste vnesli napačno geslo")
+                                    vProcesuShranjevanja = false
+                                }
+                            });
                         }
-                        console.log(spremenilKaksnoSliko)
-
-                        var changedImages = 'false'
-                        if (spremenilKaksnoSliko) {
-                            changedImages = 'true'
-                        }
-                        $.ajax({
-                            url: '/' + indexIfEdit + '/edit?changed_images=' + changedImages,
-                            type: 'POST',
-                            data: {
-                                title: title,
-                                subtitle: subtitle,
-                                vsebina: vsebina,
-                                povzetek: povzetek,
-                                image1: base64dataMainImage,
-                                image1Smaller: resizedImageBase64,
-                                othr_images: othrBase64dataImages,
-                                othr_images_pripisi: othrBase64DataImagesPripisi,
-                                password: password
-                            },
-                            success: function () {
-                                window.location.href = '/' + indexIfEdit;
-                                alert("Članek je bil uspešno posodobljen")
-                                vProcesuShranjevanja = false
-                            },
-                            error: function() {
-                                alert("Žal ste vnesli napačno geslo")
-                                vProcesuShranjevanja = false
-                            }
-                        });
-                    }
-                });
+                    });
+                }
             }
         })
     } else {
